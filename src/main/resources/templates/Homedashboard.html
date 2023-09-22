@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta carset="UTF-8">
+	<!-- start: styles -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- finish: styles -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	<!-- start: Icons -->
+	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+	<!-- finish: icons -->
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-2 mt-5">
+				<div class="container-fluid">
+					<div class="row gap-3">
+						<div class="card alert alert-success" style="width: 18rem;">
+							<h5 class="p-2">Cantidad de Medicos Registrados</h5>
+							<div class="card-body">
+								<span th:text="${countMedicos}"></span>
+							</div>
+						</div>
+						<div class="card alert alert-primary" style="width: 18rem;">
+							<h5 class="p-2">Cantidad de Medicos Registrados</h5>
+							<div class="card-body">
+								<span th:text="${countPacientes}"></span>
+							</div>
+						</div>
+						<div class="card alert alert-dark" style="width: 18rem;">
+							<h5 class="p-2">Cantidad de Citas Medicas</h5>
+							<div class="card-body">
+								
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">ULTIMOS PACIENTES REGISTRADOS</h5>
+							<hr>
+							<table id="id_table" class="table table-hover">
+								<thead class="table">
+									<tr>
+										<th class="text-center">Id</th>
+										<th class="text-center">Nombre</th>
+										<th class="text-center">Apellidos</th>
+										<th class="text-center">dni</th>
+										<th class="text-center">Direccion</th>
+										<th class="text-center">Telefono</th>
+										<th class="text-center">Sexo</th>
+										<th class="text-center">Fecha Nacimiento</th>
+									</tr>
+								</thead>
+								<tbody class="fs-7 text-center table-border-bottom-0">
+									<tr th:each="bean: ${pacientes}">
+										<td th:text="${bean.id}"></td>
+										<td th:text="${bean.nombre_paciente}"></td>
+										<td th:text="${bean.apellidos}"></td>
+										<td th:text="${bean.dni}"></td>
+										<td th:text="${bean.direccion}"></td>
+										<td th:text="${bean.telefono}"></td>
+										<td th:text="${bean.sexo}"></td>
+										<td th:text="${bean.fecha_nacimiento}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--<div style="width: 500px; height: 800px;">
+						<canvas id="miGrafico" height="200"></canvas>
+					</div>-->
+
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+	<!-- libreria para graficos -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<script text="text/javascript">
+		var ctx = document.getElementById("miGrafico").getContext("2d");
+		var data = {
+			labels: [], // Deja las etiquetas vacías inicialmente
+			datasets: [
+				{
+					data: [], // Déjalo vacío inicialmente
+					backgroundColor: ["blue", "green", "red", "orange"],
+				},
+			],
+		};
+
+		var miGrafico = new Chart(ctx, {
+			type: "bar",
+			data: data,
+			options: {
+				responsive: true,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [
+						{
+							ticks: {
+								beginAtZero: true,
+							},
+						},
+					],
+				},
+			},
+		});
+
+		fetch("/medijoven/dashboard/datos")
+			.then((response) => response.json())
+			.then((responseData) => {
+				// Actualiza las etiquetas y datos del gráfico con la respuesta del servidor
+				miGrafico.data.labels = ["Médicos", "Pacientes"];
+				miGrafico.data.datasets[0].data = [responseData.countMedicos, responseData.countPacientes];
+				miGrafico.update(); // Actualiza el gráfico para reflejar los nuevos datos
+			})
+			.catch((error) => console.error("Error al obtener datos:", error));
+	</script>
+
+
+
+
+</body>
+
+</html>

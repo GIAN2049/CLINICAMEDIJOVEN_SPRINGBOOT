@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/login.css}">
+	<title>Intranet</title>
+</head>
+
+<body>
+	<div class="container-fluid ps-md-0">
+		<div class="row g-0">
+			<div class="d-none d-md-flex col-md-8 bg-image">
+				<div class="d-flex align-items-center i-sys">
+					<div class="container col-md-9 col-lg-11 mx-auto info">
+						<h2 class="text-white">
+							Sistema de Información de Gestión Clínica y Administrativa (SIGCA)
+						</h2>
+						<span class="text-white">
+							El Sistema de Información de Gestión Clínica y Administrativa (SIGCA) es una plataforma
+							electrónica creada para la gestión eficiente de una clínica de atención médica. Este sistema
+							permite registrar y mantener datos esenciales relacionados con el cuidado de la salud de los
+							pacientes, así como la administración de la clínica. SIGCA se ha desarrollado siguiendo las
+							mejores prácticas en el marco de la Ley N° 30024, que regula el Registro Nacional de
+							Historias Clínicas Electrónicas (RENHICE) y su reglamento.
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="login d-flex align-items-center py-5">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-9 col-lg-11 mx-auto">
+								<div class="text-center py-3">
+									<h3 class="login-heading mb-4 fw-5">CLINICA MEDIJOVEN</h3>
+                      				<div th:if="${param.logout}">
+										<div class="alert alert-info alert-dismissible" role="alert">
+											Has cerrado Sesion Exitosamente	                        				
+                        					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      					</div>
+									</div>
+									
+									<div th:if="${param.error}">
+										<div class="alert alert-danger alert-dismissible" role="alert">
+                        					Usuario o Contraseña Invalidos	
+                        					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      					</div>
+									</div>
+                      				
+                      				
+                      				
+									<span>Ingrese su usuario y contraseña para acceder al sistema</span>
+								</div>
+								<form th:action="@{/login}" method="post">
+									<div class="form-floating mb-3">
+										<input type="text" class="form-control" id="floatingInput"
+											placeholder="name@example.com" name="username">
+										<label for="floatingInput">Usuario</label>
+									</div>
+									<div class="form-floating mb-3">
+										<input type="password" class="form-control" id="floatingPassword"
+											placeholder="Password" name="password">
+										<label for="floatingPassword">Contraseña</label>
+									</div>
+
+									<div class="d-grid">
+										<button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+											type="submit">Sign in</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>
