@@ -1,16 +1,35 @@
 package org.proyecto.medijoven;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+import org.proyecto.medijoven.entity.Rol;
+import org.proyecto.medijoven.service.RolServiceImpl;
+import org.proyecto.medijoven.service.UsuarioServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootTest
 class ClinicamedijovenApplicationTests {
 
+	
+	@Autowired
+	private RolServiceImpl rolService;
+	
+	@Autowired
+	private UsuarioServiceImpl usuarioService;
+	
 	@Test
 	void contextLoads() {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println(encoder.encode("123"));
+		
+		
+		List<Rol> roles = rolService.listarRoles();
+		
+		for (Rol rol : roles) {
+			System.out.println(rol.getIdRol() + "---" + rol.getNombre());
+		}
+		
+		
 	}
 
 }

@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 		
 		Set<GrantedAuthority> rol = new HashSet<GrantedAuthority>();
-		rol.add(new SimpleGrantedAuthority(user.getRol().getRol()));
+		rol.add(new SimpleGrantedAuthority(user.getRoles().getNombre()));
 		obj = new User(username, user.getPassword(), rol);
 		
 
