@@ -1,20 +1,50 @@
 package org.proyecto.medijoven;
 
+import org.proyecto.medijoven.security.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
+		
+	@Bean
+	UserDetailsService getUserDetailsService() {
+		return new  CustomUserDetailsService();
+	}
 
 	@Bean
-	BCryptPasswordEncoder passwordEncoder() {
+	BCryptPasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	@Bean
+	DaoAuthenticationProvider getAuthenticationProvider() {
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		daoAuthenticationProvider.setUserDetailsService(getUserDetailsService());
+		daoAuthenticationProvider.setPasswordEncoder(getPasswordEncoder());
+		return daoAuthenticationProvider;
+	}
+	
+	
+	
+	protected void config(AuthenticationManagerBuilder auth) throws Exception{
+		auth.authenticationProvider(getAuthenticationProvider());
+	}
+	
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,19 +65,9 @@ public class SecurityConfig{
 	}
 	
 	
-	/*
-	@Bean
-	UserDetailsService userDetailsService(BCryptPasswordEncoder encoder) {
-		InMemoryUserDetailsManager detailsManager = new InMemoryUserDetailsManager();
-		detailsManager.createUser(User
-				.withUsername("gian")
-				.password(encoder.encode("123"))
-				.roles("user")
-				.build());
-
-		return detailsManager;
-	}
-	*/
+	
+	
+	
 	
 	
 }

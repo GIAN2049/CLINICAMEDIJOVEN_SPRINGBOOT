@@ -22,13 +22,14 @@ public class Rol {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private int idRol;
 
     @Column(name = "rol")
-    private String rol;
+    private String nombre;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "rol")
+    @OneToMany(mappedBy = "roles")
     private List<Usuario> usuarios;
     
     @JsonIgnore

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @SessionAttributes({"ENLACES","USUARIO"})
 @Controller
-public class LoginController {
+public class MainController {
 	
 	@Autowired
 	private UsuarioServiceImpl servicioUsuario;
@@ -40,7 +40,7 @@ public class LoginController {
 		//OBTENER NOMBRE DEL USUARIO
 		String username = auth.getName();
 		Usuario u = servicioUsuario.loginUsuario(username);
-		List<Menu> lista = servicioUsuario.traerMenus(u.getRol().getId());
+		List<Menu> lista = servicioUsuario.traerMenus(u.getRoles().getIdRol());
 		
 		
 		Long countMedicos = service.obtenerCantidadMedicos();
@@ -48,14 +48,12 @@ public class LoginController {
 	    List<Paciente> pacientes = servicePaciente.UltimosPacientes();
 
 	    model.addAttribute("ENLACES", lista);
+	    model.addAttribute("USUARIO", username);
 	    //
 	    
 	    model.addAttribute("countMedicos", countMedicos);
 	    model.addAttribute("countPacientes", countPacientes);
 	    model.addAttribute("pacientes", pacientes);
-	    
-	    
-	    
 	    
 	    
 		return "Homedashboard";
