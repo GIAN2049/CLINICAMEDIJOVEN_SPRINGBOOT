@@ -124,7 +124,7 @@
 								<div class="col-md-6">
 									<label class="form-label">Paciente</label>
 									<select class="form-select" name="paciente" id="id_paciente">
-										<option selected>[selecccion sexo]</option>
+										<option selected>[selecccion paciente]</option>
 										<option th:each="p:${pacientes}" th:value="${p.id}"
 											th:utext="${p.nombre_paciente}"></option>
 									</select>
@@ -132,7 +132,7 @@
 								<div class="col-md-6">
 									<label class="form-label">Medico</label>
 									<select class="form-select" name="medico" id="id_medico">
-										<option selected>[selecccion sexo]</option>
+										<option selected>[selecccione medico]</option>
 										<option th:each="m:${medicos}" th:value="${m.id}" th:utext="${m.nombre_medico}">
 										</option>
 									</select>
