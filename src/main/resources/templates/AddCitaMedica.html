@@ -50,7 +50,7 @@
 									<label class="col-sm-2 col-form-label">Paciente</label>
 									<div class="col-sm-10">
 										<select class="form-select" name="paciente">
-											<option selected>[selecccion sexo]</option>
+											<option selected>[selecccione paciente]</option>
 											<option th:each="p:${pacientes}"
 													th:value="${p.id}"
 													th:utext="${p.nombre_paciente}"></option>
@@ -61,7 +61,7 @@
 									<label class="col-sm-2 col-form-label">Medico</label>
 									<div class="col-sm-10">
 										<select class="form-select" name="medico">
-											<option selected>[selecccion sexo]</option>
+											<option selected>[selecccione medico]</option>
 											<option th:each="m:${medicos}"
 											        th:value="${m.id}"
 											        th:utext="${m.nombre_medico}"></option>
@@ -147,7 +147,7 @@
 								onClose: function () {
 									$('#id_form').bootstrapValidator('resetForm', true);
 									limpiarFormulario();
-									//window.location.href = '/medijoven/dashboard/medicos';
+									window.location.href = '/medijoven/dashboard/citas-medicas';
 								}
 							});
 						},
