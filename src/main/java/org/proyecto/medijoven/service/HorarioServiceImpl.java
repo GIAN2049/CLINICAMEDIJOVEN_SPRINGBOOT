@@ -38,5 +38,11 @@ public class HorarioServiceImpl implements HorarioService{
 		// TODO Auto-generated method stub
 		return repo.findById(cod).orElse(null);
 	}
+
+	@Override
+	public List<Horario> obtenerHorarioPorMedico(int idMedico) {
+		// TODO Auto-generated method stub
+		return repo.getHorarByMedico(idMedico);
+	}
 	
 }

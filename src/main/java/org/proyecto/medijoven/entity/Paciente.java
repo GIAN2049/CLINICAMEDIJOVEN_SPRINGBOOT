@@ -1,5 +1,6 @@
 package org.proyecto.medijoven.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,8 +46,8 @@ public class Paciente {
 	private String sexo;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Column(name = "Fecha_nacimiento")
-	private String fecha_nacimiento;
+	@Column(name = "fecha_nacimiento")
+	private Date fecha_nacimiento;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "paciente")

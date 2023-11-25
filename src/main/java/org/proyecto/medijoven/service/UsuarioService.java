@@ -5,6 +5,7 @@ import java.util.List;
 import org.proyecto.medijoven.entity.Farmaceutico;
 import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.entity.Menu;
+import org.proyecto.medijoven.entity.Paciente;
 import org.proyecto.medijoven.entity.Usuario;
 
 public interface UsuarioService {
@@ -18,4 +19,5 @@ public interface UsuarioService {
 	
 	public abstract List<Medico> traerMedicosSinRrol();
 	public abstract List<Farmaceutico> traerFarmeceuticoSinRol();
+	public abstract Paciente traerPacientePorUsuario(int idUsuario);
 }

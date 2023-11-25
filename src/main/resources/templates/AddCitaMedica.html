@@ -87,7 +87,30 @@
 									
 									
 							</div>
-
+							
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">HORARIOS</h3>
+								</div>
+								<div class="card-body">
+									
+									<table class="table">
+										<thead>
+											<tr>
+												<th class="text-center">ID</th>
+												<th class="text-center">FECHA</th>
+												<th class="text-center">HORA</th>
+												<th class="text-center">ESTADO</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+										</tbody>
+									</table>
+									
+								</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -130,36 +153,36 @@
 
 							var card = `
       							<div class="row g-3">
-            <div class="col-md-4">
-                <h5 class="mb-3" id="nombre_medico">${medico.nombre_medico}</h5>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>correo</td>
-                            <td class="px-2" id="#correo">${medico.correo}</td>
-                        </tr>
-                        <tr>
-                            <td>Telefono</td>
-                            <td class="px-2" id="#telefono">${medico.telefono}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-4">
-                <dl class="row">
-                    <h5 class="mb-3">Especialidad</h5>
-                    <dd class="col-sm-5" id="#nombre_especialidad">
-                        ${medico.especialidad.nombre}
-                    </dd>
-                </dl>
-            </div>
-            <div class="col d-flex align-items-center  justify-content-end pt-3">
-                <button type="submit" class="btn btn-primary d-flex align-items-center ">
-                    Reservar Cita
-                </button>
-            </div>
-            <hr/>
-        </div>
+            						<div class="col-md-4">
+                						<h5 class="mb-3" id="nombre_medico">${medico.nombre_medico}</h5>
+                						<table>
+	                    					<tbody>
+                        						<tr>
+                            						<td>correo</td>
+                            						<td class="px-2" id="#correo">${medico.correo}</td>
+                        						</tr>
+                        						<tr>
+                            						<td>Telefono</td>
+                            						<td class="px-2" id="#telefono">${medico.telefono}</td>
+                        						</tr>
+                    						</tbody>
+                						</table>
+            						</div>
+            						<div class="col-md-4">
+                					<dl class="row">
+                    					<h5 class="mb-3">Especialidad</h5>
+                    					<dd class="col-sm-5" id="#nombre_especialidad">
+	                        				${medico.especialidad.nombre}
+                    					</dd>
+                					</dl>
+            					</div>
+            					<div class="col d-flex align-items-center  justify-content-end pt-3">
+                					<button type="submit" class="btn btn-primary d-flex align-items-center reservar-cita" data-id-medico="${medico.id}">
+                    					Reservar Cita
+                					</button>
+            					</div>
+            				<hr/>
+        					</div>
       							
     						`;
 
@@ -170,6 +193,44 @@
 				});
 
 			});
+			
+			$("#container-result").on("click", ".reservar-cita", function(){
+
+   var idMedico = $(this).data("idMedico");
+   
+   $.get("/medijoven/dashboard/consulta-horario/" + idMedico, function(horarios){
+     
+     $(".table tbody").empty();
+     
+     horarios.forEach(function(horario){
+       var row = 
+       `
+       <tr class="text-center">
+         <td>${horario.id}</td>
+         <td>${horario.fecha}</td>
+         <td>${horario.hora}</td>
+         <td>
+			 <span class="badge rounded-pill bg-success">
+				 ${horario.estado}
+			 </span>
+		 </td>
+		 <td>
+			 <button class="btn btn-eliminar btn-primary fs-7">
+				 reservar
+			</button>
+		 </td>
+       </tr>
+       `;
+       
+       $(".table tbody").append(row);
+       
+     });
+     
+   });
+   
+});
+			
+			
 	</script>
 
 </body>

@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@SessionAttributes({"ENLACES","USUARIO"})
+import jakarta.servlet.http.HttpSession;
+
+@SessionAttributes({"ENLACES","USUARIO", "INFOPACIENT"})
 @Controller
 public class MainController {
 	
@@ -60,7 +62,7 @@ public class MainController {
 	}
 	
 	@GetMapping("/dashboard")
-	public String dashboard(Model model, Authentication auth) {
+	public String dashboard(Model model, Authentication auth, HttpSession session) {
 		//OBTENER NOMBRE DEL USUARIO
 		String username = auth.getName();
 		Usuario u = servicioUsuario.loginUsuario(username);
@@ -70,10 +72,12 @@ public class MainController {
 		Long countMedicos = service.obtenerCantidadMedicos();
 	    Long countPacientes = service.obtenerCantidadPacientes();
 	    List<Paciente> pacientes = servicePaciente.UltimosPacientes();
+	    Paciente datosPaciente = servicioUsuario.traerPacientePorUsuario(u.getId());
 
 	    model.addAttribute("ENLACES", lista);
 	    model.addAttribute("USUARIO", username);
-	    //
+	    model.addAttribute("INFOPACIENT", datosPaciente.getId());
+	    
 	    
 	    model.addAttribute("countMedicos", countMedicos);
 	    model.addAttribute("countPacientes", countPacientes);

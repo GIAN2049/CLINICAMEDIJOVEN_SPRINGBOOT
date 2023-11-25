@@ -9,4 +9,6 @@ public interface HorarioService {
 	public abstract Horario guardar(Horario obj);
 	public abstract void eliminar(int codigo);
 	public abstract Horario buscarPorId(int cod);
+	public abstract List<Horario> obtenerHorarioPorMedico(int idMedico);
+
 }

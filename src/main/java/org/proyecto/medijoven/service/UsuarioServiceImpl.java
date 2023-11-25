@@ -5,6 +5,7 @@ import java.util.List;
 import org.proyecto.medijoven.entity.Farmaceutico;
 import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.entity.Menu;
+import org.proyecto.medijoven.entity.Paciente;
 import org.proyecto.medijoven.entity.Rol;
 import org.proyecto.medijoven.entity.Usuario;
 import org.proyecto.medijoven.repository.IUsuarioRepository;
@@ -65,6 +66,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public List<Farmaceutico> traerFarmeceuticoSinRol() {
 		// TODO Auto-generated method stub
 		return usuarioRepository.getFameceuticosSinRol();
+	}
+
+	@Override
+	public Paciente traerPacientePorUsuario(int idUsuario) {
+		// TODO Auto-generated method stub
+		return usuarioRepository.findPacienteByUserId(idUsuario);
 	}
 
 }

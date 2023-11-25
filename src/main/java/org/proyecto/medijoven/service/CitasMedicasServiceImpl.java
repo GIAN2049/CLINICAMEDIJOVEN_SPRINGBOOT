@@ -41,6 +41,8 @@ public class CitasMedicasServiceImpl implements CitasMedicasService{
 	@Override
 	public CitaMedica guardarCitaMedica(CitaMedica citaMedica) {
 		// TODO Auto-generated method stub
+		citaMedica.setEstadoCita("Programada");
+		
 		return repo.save(citaMedica);
 	}
 

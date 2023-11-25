@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.proyecto.medijoven.entity.CitaMedica;
 import org.proyecto.medijoven.entity.Especialidad;
+import org.proyecto.medijoven.entity.Horario;
 import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.entity.Paciente;
 import org.proyecto.medijoven.service.CitasMedicasService;
 import org.proyecto.medijoven.service.EspecialidadService;
+import org.proyecto.medijoven.service.HorarioService;
 import org.proyecto.medijoven.service.MedicoService;
 import org.proyecto.medijoven.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -36,6 +39,8 @@ public class CitaMedicaController {
 	private MedicoService medicoService;
 	@Autowired
 	private EspecialidadService especialidadService;
+	@Autowired
+	private HorarioService horarioService;
 	
 	@GetMapping("citas-medicas")
 	public String listaCitaMedica(Model model) {
@@ -49,6 +54,7 @@ public class CitaMedicaController {
 		List<Paciente> pacientes = pacienteService.listarTodos();
 		List<Medico> medicos = medicoService.listarTodos();
 		
+		Paciente paciente = (Paciente) model.getAttribute("INFOPACIENT");
 		model.addAttribute("pacientes", pacientes);
 		model.addAttribute("medicos", medicos);
 		
@@ -86,6 +92,16 @@ public class CitaMedicaController {
 		return medicoService.consultaMedico(idMedico, idEspecialidad);
 	}
 
+	@ResponseBody
+	@GetMapping("/consulta-horario/{id}")
+	public List<Horario> traerHorarioPorMedico(@PathVariable int id){
+		return horarioService.obtenerHorarioPorMedico(id);
+	}
+
+	
+	
+	
+	
 	@GetMapping("/buscar/cita-medica/{id}")
 	@ResponseBody
 	public CitaMedica buscar(@PathVariable int id) {
