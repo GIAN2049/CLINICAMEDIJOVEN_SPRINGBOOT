@@ -17,12 +17,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-/*
 	@Autowired
 	private IUsuarioRepository repo;
 
@@ -45,5 +39,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		return obj;
 	}
-*/
+
 }
