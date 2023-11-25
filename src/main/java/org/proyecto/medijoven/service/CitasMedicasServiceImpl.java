@@ -52,6 +52,4 @@ public class CitasMedicasServiceImpl implements CitasMedicasService{
 
 	
 
-	
-
 }

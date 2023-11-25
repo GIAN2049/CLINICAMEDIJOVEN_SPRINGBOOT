@@ -34,12 +34,19 @@ public class CitaMedica {
     @ManyToOne
     @JoinColumn(name = "id_medico")
     private Medico medico;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_especialidad")
+    private Especialidad especialidad;
 
     @Column(name = "fecha_cita")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaCita;
-
+    
+    @Column(name = "hora_cita")
+    private String hora;
+    
     @Column(name = "estado_cita")
     private String estadoCita;
 

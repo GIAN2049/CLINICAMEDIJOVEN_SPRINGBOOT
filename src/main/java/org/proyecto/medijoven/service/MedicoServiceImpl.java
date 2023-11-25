@@ -37,4 +37,10 @@ public class MedicoServiceImpl implements MedicoService{
 		return repo.findById(cod).get();
 	}
 
+	@Override
+	public List<Medico> consultaMedico(int idMedico, int idEspecialidad) {
+		// TODO Auto-generated method stub
+		return repo.consultaMedico(idMedico, idEspecialidad);
+	}
+
 }

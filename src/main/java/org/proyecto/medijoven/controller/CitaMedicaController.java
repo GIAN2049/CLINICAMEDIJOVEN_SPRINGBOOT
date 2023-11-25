@@ -1,26 +1,20 @@
 package org.proyecto.medijoven.controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 
 import org.proyecto.medijoven.entity.CitaMedica;
-import org.proyecto.medijoven.entity.CitaMedicaCancelada;
-import org.proyecto.medijoven.entity.Farmaco;
+import org.proyecto.medijoven.entity.Especialidad;
 import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.entity.Paciente;
-import org.proyecto.medijoven.entity.Receta;
-import org.proyecto.medijoven.service.CitasCanceladasServiceImpl;
-import org.proyecto.medijoven.service.CitasMedicasServiceImpl;
-import org.proyecto.medijoven.service.MedicoServiceImpl;
-import org.proyecto.medijoven.service.PacienteServiceImpl;
+import org.proyecto.medijoven.service.CitasMedicasService;
+import org.proyecto.medijoven.service.EspecialidadService;
+import org.proyecto.medijoven.service.MedicoService;
+import org.proyecto.medijoven.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,26 +29,18 @@ public class CitaMedicaController {
 
 	
 	@Autowired
-	private CitasMedicasServiceImpl citaMedicaService;
+	private CitasMedicasService citaMedicaService;
 	@Autowired
-	private CitasCanceladasServiceImpl citaMedicaCanceladasService;
+	private PacienteService pacienteService;
 	@Autowired
-	private PacienteServiceImpl pacienteService;
+	private MedicoService medicoService;
 	@Autowired
-	private MedicoServiceImpl medicoService;
+	private EspecialidadService especialidadService;
 	
 	@GetMapping("citas-medicas")
 	public String listaCitaMedica(Model model) {
 		List<CitaMedica> citasMedicas = citaMedicaService.listarTodos();
-		List<Paciente> pacientes = pacienteService.listarTodos();
-		List<Medico> medicos = medicoService.listarTodos();
-		List<CitaMedicaCancelada> citasCanceladas = citaMedicaCanceladasService.listarTodos();
-		
 		model.addAttribute("citasMedicas", citasMedicas);
-		model.addAttribute("citasMedicasCanceladas", citasCanceladas);
-		model.addAttribute("pacientes", pacientes);
-		model.addAttribute("medicos", medicos);
-		
 		return "ListCitaMedica";
 	}
 	
@@ -66,9 +52,13 @@ public class CitaMedicaController {
 		model.addAttribute("pacientes", pacientes);
 		model.addAttribute("medicos", medicos);
 		
+		List<Especialidad> especialidades = especialidadService.listarTodos();
+		model.addAttribute("especialidades", especialidades);
+		
 		return "AddCitaMedica";
 	}
 	
+
 	
 	@PostMapping("/cita-medica/registrar")
 	@ResponseBody
@@ -88,6 +78,12 @@ public class CitaMedicaController {
 		}
 
 		return response;
+	}
+	
+	@ResponseBody
+	@GetMapping("/consulta-medico")
+	public List<Medico> consultaMedico(int idMedico, int idEspecialidad) {
+		return medicoService.consultaMedico(idMedico, idEspecialidad);
 	}
 
 	@GetMapping("/buscar/cita-medica/{id}")
@@ -119,6 +115,7 @@ public class CitaMedicaController {
 		return map;
 	}
 	
+	/*
 	@DeleteMapping("/cita-medica/eliminar-y-registrar/{id}")
     @ResponseBody
     public HashMap<String, String> eliminarYRegistrarCitaCancelada(@PathVariable int id) {
@@ -160,7 +157,7 @@ public class CitaMedicaController {
         }
 
         return map;
-    }
+    }*/
 
 
 	/*@DeleteMapping("/cita-medica/eliminar/{id}")

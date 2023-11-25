@@ -3,6 +3,7 @@ package org.proyecto.medijoven;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.entity.Rol;
 import org.proyecto.medijoven.service.RolServiceImpl;
 import org.proyecto.medijoven.service.UsuarioServiceImpl;
@@ -18,16 +19,25 @@ class ClinicamedijovenApplicationTests {
 	
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
+
 	
 	@Test
 	void contextLoads() {
 		
-		
+		/*
 		List<Rol> roles = rolService.listarRoles();
 		
 		for (Rol rol : roles) {
 			System.out.println(rol.getIdRol() + "---" + rol.getNombre());
 		}
+		*/
+		List<Medico> medicos = usuarioService.traerMedicosSinRrol();
+		
+		
+		for (Medico medico : medicos) {
+			System.out.println(medico.getNombre_medico());
+		}
+		
 		
 		
 	}

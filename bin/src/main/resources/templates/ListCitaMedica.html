@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta carset="UTF-8">
+	<!-- start: styles -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- finish: styles -->
+	<!-- start: datatable -->
+	<!--<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css}">-->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	<!-- start: Icons -->
+	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+	<!-- finish: icons -->
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-2">
+				<div class="container-fluid">
+					<div class="card mt-3">
+						<div class="card-body">
+							<h5 class="card-title">Citas Medicas</h5>
+							<hr>
+							<table id="id_table" class="table table-hover">
+								<thead>
+									<tr>
+										<th class="text-center">Id</th>
+										<th class="text-center">Paciente</th>
+										<th class="text-center">Medico</th>
+										<th class="text-center">Fecha Cita</th>
+										<th class="text-center">Estado</th>
+										<th class="text-center">Observaciones</th>
+										<th class="text-center">Acciones</th>
+									</tr>
+								</thead>
+								<tbody class="text-center">
+									<tr th:each="cm: ${citasMedicas}">
+										<td th:text="${cm.idCitaMedica}"></td>
+										<td th:text="${cm.paciente.nombre_paciente}"></td>
+										<td th:text="${cm.medico.nombre_medico}"></td>
+										<td th:text="${cm.fechaCita}"></td>
+										<td th:text="${cm.estadoCita}"></td>
+										<td th:text="${cm.observaciones}"></td>
+										<td>
+											<button class="btn btn-editar btn-warning fs-7" data-bs-toggle="modal"
+												data-bs-target="#modalEditar">
+												<i class="ri-edit-box-line"></i>
+											</button>
+											<button class="btn btn-eliminar btn-danger fs-7">
+												<i class="ri-delete-bin-2-fill"></i>
+											</button>
+											<button class="btn btn-detalles btn-info fs-7">
+												<i class="ri-file-list-line"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="card mt-3">
+						<div class="card-body">
+							<h5 class="card-title">Citas Medicas Canceladas</h5>
+							<hr>
+							<table id="id_table" class="table table-hover">
+								<thead class="table-dark fs-6">
+									<tr>
+										<th class="text-center">Id</th>
+										<th class="text-center">Paciente</th>
+										<th class="text-center">Medico</th>
+										<th class="text-center">Fecha Cita</th>
+										<th class="text-center">Fecha Eliminacion</th>
+										<th class="text-center">Estado</th>
+										<th class="text-center">Observaciones</th>
+										<th class="text-center">Acciones</th>
+									</tr>
+								</thead>
+								<tbody class="fs-7 text-center">
+									<tr th:each="cmc: ${citasMedicasCanceladas}">
+										<td th:text="${cmc.id}"></td>
+										<td th:text="${cmc.paciente.nombre_paciente}"></td>
+										<td th:text="${cmc.medico.nombre_medico}"></td>
+										<td th:text="${cmc.fechaCita}"></td>
+										<td th:text="${cmc.fechaCancelacion}"></td>
+										<td th:text="${cmc.estadoCita}"></td>
+										<td th:text="${cmc.observaciones}"></td>
+										<td>
+											<button class="btn btn-eliminar btn-danger fs-7">
+												<i class="ri-delete-bin-2-fill"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="modalEditar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+				aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form class="row g-3" id="id_form">
+								<div class="col-12" style="display: none;">
+									<label class="col-sm-1 col-form-label">Id</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="idCitaMedica" readonly id="id_ID">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Paciente</label>
+									<select class="form-select" name="paciente" id="id_paciente">
+										<option selected>[selecccion sexo]</option>
+										<option th:each="p:${pacientes}" th:value="${p.id}"
+											th:utext="${p.nombre_paciente}"></option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Medico</label>
+									<select class="form-select" name="medico" id="id_medico">
+										<option selected>[selecccion sexo]</option>
+										<option th:each="m:${medicos}" th:value="${m.id}" th:utext="${m.nombre_medico}">
+										</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Fecha cita</label>
+									<input type="date" class="form-control" name="fechaCita" id="id_fecCita">
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Estado</label>
+									<select class="form-select" name="estadoCita" id="id_estado">
+										<option value="Programada">Programada</option>
+										<option value="Confirmada">Confirmada</option>
+										<option value="Cancelada">Cancelada</option>
+									</select>
+								</div>
+								<div class="col-12">
+									<label class="form-label">Observaciones</label>
+									<textarea class="form-control" rows="6" name="observaciones"
+										placeholder="Ingresar observaciones" id="id_observaciones">
+										</textarea>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
+							<button type="button" class="btn btn-primary" id="id_guardar">guardar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+	<!--Datatables-->
+
+	<script th:src="@{https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js}"></script>
+
+
+	<script th:src="@{//cdn.jsdelivr.net/npm/sweetalert2@10}"></script>
+	<script
+		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js}"></script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#id_table').DataTable({
+				"ordering": false,
+				"pageLength": 8
+			});
+
+			$(document).on("click", ".btn-eliminar", function () {
+				let cod, nombre;
+				cod = $(this).parents("tr").find("td")[0].innerHTML;
+				nombre = $(this).parents("tr").find("td")[1].innerHTML;
+
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-danger'
+					},
+					buttonsStyling: false
+				});
+
+				if (cod != null) {
+					$.ajax({
+						type: "DELETE",
+						url: "/medijoven/dashboard/cita-medica/eliminar-y-registrar/" + cod,
+						success: function (data) {
+							swalWithBootstrapButtons.fire({
+								title: 'Are you sure?',
+								text: "Estas seguro de eliminar al doctor " + nombre,
+								icon: 'warning',
+								showCancelButton: true,
+								confirmButtonText: 'Yes, delete it!',
+								cancelButtonText: 'No, cancel!',
+								reverseButtons: true
+							}).then((result) => {
+								if (result.isConfirmed) {
+									swalWithBootstrapButtons.fire({
+										icon: 'success',
+										title: data.MENSAJE,
+										willClose: function () {
+											// Recargar la página
+											window.location.reload();
+										}
+									});
+								} else if (result.dismiss === Swal.DismissReason.cancel) {
+									swalWithBootstrapButtons.fire(
+										'Cancelled',
+										'Your imaginary file is safe :)',
+										'error'
+									);
+								}
+							});
+						},
+						error: function (data) {
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE,
+							});
+						}
+					});
+				}
+			});
+
+
+			/*$(document).on("click", ".btn-eliminar", function () {
+	
+				let cod, nombre;
+				cod = $(this).parents("tr").find("td")[0].innerHTML;
+				nombre = $(this).parents("tr").find("td")[1].innerHTML;;
+	
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-danger'
+					},
+					buttonsStyling: false
+				})
+	
+				console.log(cod)
+	
+	
+				if (cod != null) {
+					$.ajax({
+						type: "DELETE",
+						url: "/medijoven/dashboard/cita-medica/eliminar/" + cod, // Corregido para usar una URL absoluta
+						success: function (data) {
+							swalWithBootstrapButtons.fire({
+								title: 'Are you sure?',
+								text: "Estas seguro de eliminar al doctor " + nombre,
+								icon: 'warning',
+								showCancelButton: true,
+								confirmButtonText: 'Yes, delete it!',
+								cancelButtonText: 'No, cancel!',
+								reverseButtons: true
+							}).then((result) => {
+								if (result.isConfirmed) {
+									swalWithBootstrapButtons.fire({
+										icon: 'success',
+										title: data.MENSAJE,
+										willClose: function () {
+											// Recargar la página
+											window.location.reload();
+										}
+									}
+									)
+								} else if (
+									result.dismiss === Swal.DismissReason.cancel
+								) {
+									swalWithBootstrapButtons.fire(
+										'Cancelled',
+										'Your imaginary file is safe :)',
+										'error'
+									)
+								}
+							})
+						},
+						error: function (data) {
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE, // Usar data.MENSAJE para obtener el mensaje de error
+								// No es necesario acceder a xhr.responseText
+							});
+						}
+					});
+				}
+	
+			});*/
+			$(document).on("click", ".btn-editar", function () {
+				//leer la columna codigo de la fila actual segun el boton que se hiso click
+				let id;
+				id = $(this).parents("tr").find("td")[0].innerHTML;
+				//realizar solicitud ajax
+				$.ajax({
+					url: "/medijoven/dashboard/buscar/cita-medica/" + id,
+					type: "GET",
+					dataType: "json",
+					success: function (response) {
+						$('#id_ID').val(response.idCitaMedica);
+						$('#id_paciente').val(response.paciente.id);
+						$('#id_medico').val(response.medico.id);
+						$('#id_fecCita').val(response.fechaCita);
+						$('#id_estado').val(response.estadoCita);
+						$('#id_observaciones').val(response.observaciones);
+
+					}
+				})
+
+			})
+
+			$("#id_guardar").click(function () {
+				var id = $('#id_ID').val();
+				if (id != null) {
+					$.ajax({
+						type: "PUT",
+						url: "/medijoven/dashboard/medico/actualizar/" + id, // Corregido para usar una URL absoluta
+						data: $('#id_form').serialize(),
+						success: function (data) {
+							Swal.fire({
+								icon: 'success',
+								title: 'Éxito',
+								text: data.MENSAJE,
+								onClose: function () {
+									// Recargar la página
+									window.location.reload();
+								}
+							});
+						},
+						error: function (data) {
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE, // Usar data.MENSAJE para obtener el mensaje de error
+								// No es necesario acceder a xhr.responseText
+							});
+						}
+					});
+				}
+
+			});
+
+			function limpiarFormulario() {
+				$('#id_form').trigger("reset");
+			}
+
+		});
+
+
+	</script>
+
+</body>
+
+</html>

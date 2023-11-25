@@ -34,11 +34,7 @@
 										<th class="text-center">Id</th>
 										<th class="text-center">Nombre</th>
 										<th class="text-center">Apellidos</th>
-										<th class="text-center">dni</th>
-										<th class="text-center">Direccion</th>
-										<th class="text-center">Correo</th>
-										<th class="text-center">Telefono</th>
-										<th class="text-center">Sexo</th>
+										<th class="text-center">Especialidad</th>
 										<th class="text-center">Acciones</th>
 									</tr>
 								</thead>
@@ -47,11 +43,7 @@
 										<td th:text="${bean.id}"></td>
 										<td th:text="${bean.nombre_medico}"></td>
 										<td th:text="${bean.apellidos_medico}"></td>
-										<td th:text="${bean.dni}"></td>
-										<td th:text="${bean.direccion}"></td>
-										<td th:text="${bean.correo}"></td>
-										<td th:text="${bean.telefono}"></td>
-										<td th:text="${bean.sexo}"></td>
+										<td th:text="${bean.especialidad.nombre}"></td>
 										<td>
 											<button class="btn btn-editar btn-warning fs-7" data-bs-toggle="modal"
 												data-bs-target="#modalEditar">
@@ -59,6 +51,10 @@
 											</button>
 											<button class="btn btn-eliminar btn-danger fs-7">
 												<i class="ri-delete-bin-2-fill"></i>
+											</button>
+											<button class="btn btn-eliminar btn-info fs-7">
+												<!--<i class="ri-contacts-book-fill"></i>-->
+												<i class="ri-file-user-fill" style="color: white;"></i>
 											</button>
 										</td>
 									</tr>
@@ -110,12 +106,21 @@
 									<label class="form-label">Telefono</label>
 									<input type="text" class="form-control" name="telefono" id="id_telefono">
 								</div>
-								<div class="col-12">
+								<div class="col-md-6">
 									<label class="form-label">Sexo</label>
 									<select class="form-select" name="sexo" id="id_sexo">
 										<option selected>[seleccione Sexo]</option>
 										<option value="masculino">Masculino</option>
 										<option value="femenino">Femenino</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Especialidad</label>
+									<select class="form-select" name="especialidad" id="id_especialidad">
+										<option selected>[selecccione medico]</option>
+										<option th:each="m:${especialidades}"
+											    th:value="${m.id_especialidad}"
+											    th:utext="${m.nombre}"></option>
 									</select>
 								</div>
 							</form>
@@ -236,6 +241,7 @@
 						$('#id_correo').val(response.correo);
 						$('#id_telefono').val(response.telefono);
 						$('#id_sexo').val(response.sexo);
+						$('#id_especialidad').val(response.especialidad.id_especialidad);
 						
 					}
 				})

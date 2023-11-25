@@ -20,18 +20,18 @@
 	.help-block[data-bv-result]:not([data-bv-for]) {
 		color: red;
 	}
-
-	/* Cambiar el color del borde de los campos inválidos a rojo */
+	
 	.is-invalid {
 		border-color: red;
 	}
 	
-	/*.form-control:focus {
-    	color: var(--bs-body-color);
-    	background-color: var(--bs-body-bg);
-    	border-color: #86b7fe;
-    	outline: 0;
-	}*/
+	fieldset, legend {
+		all: revert;
+	}
+	
+	.reset{
+		border: 1px solid #d9dee3;
+	}
 </style>
 
 <body>
@@ -42,58 +42,51 @@
 			<div class="py-4">
 				<div class="container-fluid">
 					<div class="card mt-5">
+						<div class="card-header">
+							<h5 class="card-title">Registro De Cita Medica</h5>
+							
+						</div>
 						<div class="card-body">
-							<h5>Registro De Cita Medica</h5>
-							<hr>
-							<form id="id_form">
-								<div class="row mb-3">
-									<label class="col-sm-2 col-form-label">Paciente</label>
-									<div class="col-sm-10">
-										<select class="form-select" name="paciente">
-											<option selected>[selecccione paciente]</option>
-											<option th:each="p:${pacientes}"
-													th:value="${p.id}"
-													th:utext="${p.nombre_paciente}"></option>
-										</select>
-									</div>
-								</div>
-								<div class="row mb-3">
+						
+							<form id="id_form" class="px-2" th:action="@{/cita-medica/medico}">
+								<fieldset class="row reset alert alert-info">
+								<div class="col-md-5 mb-3">
 									<label class="col-sm-2 col-form-label">Medico</label>
-									<div class="col-sm-10">
-										<select class="form-select" name="medico">
-											<option selected>[selecccione medico]</option>
-											<option th:each="m:${medicos}"
-											        th:value="${m.id}"
-											        th:utext="${m.nombre_medico}"></option>
+									<select class="form-select" id="id_medico">
+											<option value="-1">[selecccione medico]</option>
+											<option th:each="p:${medicos}"
+													th:value="${p.id}"
+													th:utext="${p.nombre_medico}"></option>
 										</select>
-									</div>
 								</div>
-								<div class="row mb-3">
-									<label class="col-sm-2 col-form-label">Fecha cita</label>
-									<div class="col-sm-10">
-										<input type="date" class="form-control" name="fechaCita">
-									</div>
-								</div>
-								<div class="row mb-3">
-									<label class="col-sm-2 col-form-label">Estado</label>
-									<div class="col-sm-10">
-										<select class="form-select" name="estadoCita">
-											<option value="Programada">Programada</option>
-											<option selected value="Confirmada">Confirmada</option>
-											<option value="Cancelada">Cancelada</option>
+								<div class="col-md-5 mb-3">
+									<label class="col-sm-4 col-form-label">Especialidad</label>
+									<select class="form-select" id="id_especialidad">
+											<option value="-1">[selecccione paciente]</option>
+											<option th:each="p:${especialidades}"
+													th:value="${p.id_especialidad}"
+													th:utext="${p.nombre}"></option>
 										</select>
-									</div>
 								</div>
-								<div class="row mb-3">
-									<label class="col-sm-2 col-form-label">Observaciones</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" rows="6" name="observaciones"
-												  placeholder="Ingresar observaciones">
-										</textarea>
-									</div>
+								<div class="col d-flex align-items-center  justify-content-end pt-3">
+									<button type="submit" class="btn btn-success d-flex align-items-center" id="id-consultar">
+										<i class="ri-search-line px-2"></i>
+										Buscar
+									</button>
 								</div>
-								<button type="submit" id="id_registrar" class="btn btn-primary">guardar</button>
+								</fieldset>
+								<fieldset class="row reset alert alert-primary">
+									<div class="d-flex align-items-center">
+										<span>RESULTADOS DE BUSQUEDA: </span>
+										<span class="px-2" id="total"></span>
+									</div>
+								</fieldset>
 							</form>
+							
+							<div class="mt-5" id="container-result">
+									
+									
+							</div>
 
 						</div>
 					</div>
@@ -115,62 +108,69 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function () {
-			$('#id_form').bootstrapValidator({
-				fields: {
-					observaciones: {
-						validators: {
-							notEmpty: {
-								message: 'Campo Descripcion es obligatorio'
-							}
-						}
+		$("#id-consultar").click(function (e) {
+
+				e.preventDefault();
+
+				var idMedico = $("#id_medico").val();
+				var idEspecialidad = $("#id_especialidad").val();
+
+				$.ajax({
+					url: "/medijoven/dashboard/consulta-medico",
+					data: {
+						idMedico: idMedico,
+						idEspecialidad: idEspecialidad
+					},
+					success: function (response) {
+
+						$("#container-result").empty(); // Limpiar contenedor de cards
+						$("#total").text(response.length);
+						
+						response.forEach(medico => {
+
+							var card = `
+      							<div class="row g-3">
+            <div class="col-md-4">
+                <h5 class="mb-3" id="nombre_medico">${medico.nombre_medico}</h5>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>correo</td>
+                            <td class="px-2" id="#correo">${medico.correo}</td>
+                        </tr>
+                        <tr>
+                            <td>Telefono</td>
+                            <td class="px-2" id="#telefono">${medico.telefono}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <dl class="row">
+                    <h5 class="mb-3">Especialidad</h5>
+                    <dd class="col-sm-5" id="#nombre_especialidad">
+                        ${medico.especialidad.nombre}
+                    </dd>
+                </dl>
+            </div>
+            <div class="col d-flex align-items-center  justify-content-end pt-3">
+                <button type="submit" class="btn btn-primary d-flex align-items-center ">
+                    Reservar Cita
+                </button>
+            </div>
+            <hr/>
+        </div>
+      							
+    						`;
+
+							$("#container-result").append(card);
+
+						});
 					}
-				}
+				});
+
 			});
-
-			$("#id_registrar").click(function () {
-				// Lanza la validación
-				$('#id_form').bootstrapValidator('validate');
-
-				// Pregunta si es válido el formulario (Si no tiene errores)
-				if ($('#id_form').data('bootstrapValidator').isValid()) {
-					$.ajax({
-						type: "POST",
-						url: "/medijoven/dashboard/cita-medica/registrar",
-						data: $('#id_form').serialize(),
-						success: function (data) {
-							// Mostrar mensaje de éxito con SweetAlert2
-							Swal.fire({
-								icon: 'success',
-								title: 'Éxito',
-								text: data.MENSAJE,
-								onClose: function () {
-									$('#id_form').bootstrapValidator('resetForm', true);
-									limpiarFormulario();
-									window.location.href = '/medijoven/dashboard/citas-medicas';
-								}
-							});
-						},
-						error: function (data) {
-							// Mostrar mensaje de error con SweetAlert2
-							Swal.fire({
-								icon: 'error',
-								title: 'Error',
-								text: data.MENSAJE,
-								footer: xhr.responseText
-							});
-						}
-					});
-				}
-			});
-
-			// Función para limpiar el formulario (reemplaza esto con tu función real)
-			function limpiarFormulario() {
-				$('#id_form').trigger("reset");
-			}
-		});
 	</script>
-
 
 </body>
 
