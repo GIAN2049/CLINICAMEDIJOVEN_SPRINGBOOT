@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.proyecto.medijoven.entity.Categoria;
 import org.proyecto.medijoven.entity.Especialidad;
+import org.proyecto.medijoven.entity.Farmaco;
 import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.service.EspecialidadServiceImpl;
 import org.proyecto.medijoven.service.MedicoServiceImpl;
@@ -27,15 +28,24 @@ public class MedicoController {
 	@Autowired
 	private MedicoServiceImpl service;
 	
+	@Autowired
+	private EspecialidadServiceImpl serviceEspecialidad;
+	
 	@GetMapping("/medicos")
 	public String ListaMedico(Model model) {
 		List<Medico> medicos = service.listarTodos();
+		List<Especialidad> especialidades = serviceEspecialidad.listarTodos();
+		
 		model.addAttribute("medicos", medicos);
+		model.addAttribute("especialidades", especialidades);
 		return "ListMedicos";
 	}
 	
 	@GetMapping("/medico")
-	public String viewFormMedico() {
+	public String viewFormMedico(Model model) {
+		
+		List<Especialidad> especialidades = serviceEspecialidad.listarTodos();
+		model.addAttribute("especialidades", especialidades);
 		return "AddMedico";
 	}
 	

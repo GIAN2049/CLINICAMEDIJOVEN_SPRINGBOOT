@@ -30,4 +30,8 @@ public class Especialidad {
 	@JsonIgnore
 	@OneToMany(mappedBy = "especialidad")
 	private List<Receta> recetas;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "especialidad")
+    private List<Medico> medicos;
 }

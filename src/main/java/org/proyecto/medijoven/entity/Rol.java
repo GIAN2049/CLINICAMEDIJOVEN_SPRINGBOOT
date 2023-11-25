@@ -29,7 +29,7 @@ public class Rol {
     private String nombre;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "rol")
     private List<Usuario> usuarios;
     
     @JsonIgnore

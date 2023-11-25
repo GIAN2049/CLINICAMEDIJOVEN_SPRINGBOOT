@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- start: styles -->
+	<!--<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">-->
+	
+	<link rel="stylesheet" th:href="@{/css/core.css}">
+	<link rel="stylesheet" th:href="@{/css/theme-default.css}">
+	<link rel="stylesheet" th:href="@{/css/pages/page-auth.css}">
+	
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<!-- finish: styles -->
+	<!-- start: datatable -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	<!-- start: Icons -->
+	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+	<!-- finish: icons -->
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div class="container-xxl">
+		<div class="authentication-wrapper authentication-basic container-p-y">
+			<div class="authentication-inner">
+				<!-- Register Card -->
+				<div class="card">
+					<div class="card-body">
+						<!-- Logo -->
+						<div class="app-brand justify-content-center">
+							<a href="index.html" class="app-brand-link gap-2">
+								<span class="app-brand-logo demo">
+									ss
+								</span>
+								<span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+							</a>
+						</div>
+						<!-- /Logo -->
+						<h4 class="mb-2">Adventure starts here 🚀</h4>
+						<p class="mb-4">Make your app management easy and fun!</p>
+
+						<form id="id_form" class="mb-3">
+							<div class="mb-3">
+								<label for="nombre" class="form-label">Nombre</label>
+								<input type="text" class="form-control" id="nombre" name="nombre_paciente"
+									placeholder="Enter your username" autofocus />
+							</div>
+							<div class="mb-3">
+								<label for="apellido" class="form-label">Apellidos</label>
+								<input type="text" class="form-control" id="apellido" name="apellidos"
+									placeholder="Enter your username" autofocus />
+							</div>
+							<div class="mb-3">
+								<label for="dni" class="form-label">Dni</label>
+								<input type="text" class="form-control" id="dni" name="dni"
+									placeholder="Enter your username" autofocus />
+							</div>
+							<div class="mb-3">
+								<label for="direccion" class="form-label">Direccion</label>
+								<input type="text" class="form-control" id="direccion" name="direccion"
+									placeholder="Enter your username" autofocus />
+							</div>
+							<div class="mb-3">
+								<label for="telefono" class="form-label">Telefono</label>
+								<input type="text" class="form-control" id="telefono" name="telefono"
+									placeholder="Enter your username" autofocus />
+							</div>
+							<div class="mb-3">
+								<label for="sexo" class="form-label">Sexo</label>
+								<input type="text" class="form-control" id="sexo" name="sexo"
+									placeholder="Enter your username" autofocus />
+							</div>
+							<div class="mb-3">
+								<label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+								<input type="date" class="form-control" id="fechaNacimiento" name="Fecha_nacimiento"
+									placeholder="Enter your username" autofocus />
+							</div>
+							<div class="mb-3 form-password-toggle">
+								<label class="form-label" for="password">Password</label>
+								<div class="input-group input-group-merge">
+									<input type="password" id="password" class="form-control" name="password"
+										placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+										aria-describedby="password" />
+									<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary d-grid w-100" id="id_registrar">Crear Cuenta</button>
+						</form>
+					</div>
+				</div>
+				<!-- Register Card -->
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+
+	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+		
+			$("#id_registrar").click(function () {
+				
+				$.ajax({
+						type: "POST",
+						url: "/registrar",
+						data: $('#id_form').serialize(),
+						success: function (data) {
+							// Mostrar mensaje de éxito con SweetAlert2
+							Swal.fire({
+								icon: 'success',
+								title: 'Éxito',
+								text: data.MENSAJE,
+								onClose: function () {
+									limpiarFormulario();
+								}
+							});
+						},
+						error: function (data) {
+							// Mostrar mensaje de error con SweetAlert2
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE,
+								footer: xhr.responseText
+							});
+						}
+					});
+				
+				
+			});
+
+			// Función para limpiar el formulario (reemplaza esto con tu función real)
+			function limpiarFormulario() {
+				$('#id_form').trigger("reset");
+			}
+		});
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

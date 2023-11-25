@@ -1,0 +1,99 @@
+<!-- start: Sidebar -->
+<div th:fragment="sidebar">
+	<div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
+		<div class="d-flex align-items-center p-3">
+			<a href="#" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">MediLink</a>
+			<i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
+		</div>
+		<ul class="sidebar-menu p-3 m-0 mb-0">
+			<li class="sidebar-menu-item active">
+				<a th:href="@{/dashboard}">
+					<i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+					Dashboard
+				</a>
+			</li>
+			<li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Custom</li>
+			
+			<li th:each="menu : ${session.ENLACES}" class="sidebar-menu-item has-dropdown">
+				<a href="#">
+					<i th:class="${menu.icon}"></i>
+					<span th:text="${menu.nombre}"></span>
+					<i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+				</a>
+				<ul class="sidebar-dropdown-menu px-5">
+					<li th:each="item: ${menu.items}">
+						<a th:href="${item.url}" th:text="${item.nombre}">
+						</a>
+					</li>
+				</ul>
+			</li>
+	
+			<li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Apps</li>
+			<li class="sidebar-menu-item has-dropdown">
+				<a href="#">
+					<i class="ri-shopping-cart-2-line sidebar-menu-item-icon"></i>
+					eCommerce
+					<i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+				</a>
+				<ul class="sidebar-dropdown-menu">
+					<li class="sidebar-dropdown-menu-item">
+						<a href="#">
+							Shop
+						</a>
+					</li>
+					<li class="sidebar-dropdown-menu-item">
+						<a href="#">
+							Checkout
+						</a>
+					</li>
+					<li class="sidebar-dropdown-menu-item">
+						<a href="#">
+							Details
+						</a>
+					</li>
+					<li class="sidebar-dropdown-menu-item">
+						<a href="#">
+							Wishlist
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="sidebar-menu-item">
+				<a href="#">
+					<i class="ri-mail-line sidebar-menu-item-icon"></i>
+					Email
+				</a>
+			</li>
+			<li class="sidebar-menu-item">
+				<a href="#">
+					<i class="ri-calendar-line sidebar-menu-item-icon"></i>
+					Calendar
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="sidebar-overlay"></div>
+</div>
+<!-- end: Sidebar -->
+
+<!-- start: Navbar -->
+<div th:fragment="navbar">
+	<nav class="px-3 py-2 bg-white rounded shadow-sm">
+		<i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
+		<h5 class="fw-bold mb-0 me-auto">Dashboard</h5>
+		<div class="dropdown">
+			<div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
+				aria-expanded="false">
+				<span class="me-2 d-none d-sm-block" th:text="${USUARIO}"></span>
+				<img class="navbar-profile-image"
+					src="https://cdn-icons-png.flaticon.com/128/149/149071.png"
+					alt="Image">
+			</div>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				<li><a class="dropdown-item" href="#">info</a></li>
+				<li><a class="dropdown-item" th:href="@{/logout}">cerrar sesion</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
+<!-- end: Navbar -->

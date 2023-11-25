@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- start: styles -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	
+
+	<!-- finish: styles -->
+	<!-- start: datatable -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	<!-- start: Icons -->
+	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+	<!-- finish: icons -->
+	<title>Insert title here</title>
+</head>
+<style>
+	.help-block[data-bv-for],
+	.help-block[data-bv-result]:not([data-bv-for]) {
+		color: red;
+	}
+
+	/* Cambiar el color del borde de los campos inválidos a rojo */
+	.is-invalid {
+		border-color: red;
+	}
+	
+	/*.form-control:focus {
+    	color: var(--bs-body-color);
+    	background-color: var(--bs-body-bg);
+    	border-color: #86b7fe;
+    	outline: 0;
+	}*/
+</style>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-4">
+				<div class="container-fluid">
+					<div class="card mt-5">
+						<div class="card-body">
+							<h5>Asignacion de Horario a medico</h5>
+							<hr>
+							<form id="id_form" class="row g-3">
+								<div class="col-md-6">
+									<label class="col-sm-2 col-form-label">Fecha</label>
+									<input type="date" class="form-control" name="fecha">
+								</div>
+								<div class="col-md-6">
+									<label class="col-sm-2 col-form-label">Hora</label>
+									<input type="time" class="form-control" name="hora">
+								</div>
+								<div class="col-12">
+									<label class="col-sm-5 col-form-label">Medico</label>
+									<select class="form-select" name="medico">
+										<option selected>[selecccione medico]</option>
+										<option th:each="m:${medicos}"
+											    th:value="${m.id}"
+											    th:utext="${m.nombre_medico}"></option>
+									</select>
+								</div>
+								
+								<button type="submit" id="id_registrar" class="btn btn-primary">guardar</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#id_form').bootstrapValidator({
+				fields: {
+					Fecha: {
+						validators: {
+							notEmpty: {
+								message: 'Campo fecha es obligatorio'
+							}
+						}
+					}
+				}
+			});
+
+			$("#id_registrar").click(function () {
+				// Lanza la validación
+				$('#id_form').bootstrapValidator('validate');
+
+				// Pregunta si es válido el formulario (Si no tiene errores)
+				if ($('#id_form').data('bootstrapValidator').isValid()) {
+					$.ajax({
+						type: "POST",
+						url: "/medijoven/dashboard/horario/registrar",
+						data: $('#id_form').serialize(),
+						success: function (data) {
+							// Mostrar mensaje de éxito con SweetAlert2
+							Swal.fire({
+								icon: 'success',
+								title: 'Éxito',
+								text: data.MENSAJE,
+								onClose: function () {
+									$('#id_form').bootstrapValidator('resetForm', true);
+									limpiarFormulario();
+									//window.location.href = '/medijoven/dashboard/medicos';
+								}
+							});
+						},
+						error: function (data) {
+							// Mostrar mensaje de error con SweetAlert2
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE,
+								footer: xhr.responseText
+							});
+						}
+					});
+				}
+			});
+
+			// Función para limpiar el formulario (reemplaza esto con tu función real)
+			function limpiarFormulario() {
+				$('#id_form').trigger("reset");
+			}
+		});
+	</script>
+
+
+</body>
+
+</html>

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,20 +22,27 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "nombre_usuario")
+    @Column(name = "nombre_usuario", unique = true)
     private String username;
 
     @Column(name = "contrasena")
     private String password;
 
-    @Column(name = "nombre_completo")
-    private String nombreCompleto;
-
-    @Column(name = "telefono")
-    private String telefono;
-
     @ManyToOne
     @JoinColumn(name = "id_rol")
-    private Rol roles; 
+    private Rol rol;
+    
+    
+    @OneToOne
+    @JoinColumn(name="id_medico")
+    private Medico medico;
+    
+    @OneToOne
+    @JoinColumn(name="id_farmaceutico")
+    private Farmaceutico farmaceutico;
+   
+    @ManyToOne
+    @JoinColumn(name = "id_paciente")
+    private Paciente paciente;
 
 }

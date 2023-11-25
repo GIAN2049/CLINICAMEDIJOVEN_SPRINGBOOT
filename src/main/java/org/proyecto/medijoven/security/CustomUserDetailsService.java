@@ -17,6 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+/*
 	@Autowired
 	private IUsuarioRepository repo;
 
@@ -33,11 +39,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 		
 		Set<GrantedAuthority> rol = new HashSet<GrantedAuthority>();
-		rol.add(new SimpleGrantedAuthority(user.getRoles().getNombre()));
+		rol.add(new SimpleGrantedAuthority(user.getRol().getNombre()));
 		obj = new User(username, user.getPassword(), rol);
 		
 
 		return obj;
 	}
-
+*/
 }

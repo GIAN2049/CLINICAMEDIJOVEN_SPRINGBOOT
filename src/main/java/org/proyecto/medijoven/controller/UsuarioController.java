@@ -3,13 +3,13 @@ package org.proyecto.medijoven.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import org.proyecto.medijoven.entity.Paciente;
+import org.proyecto.medijoven.entity.Farmaceutico;
+import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.entity.Rol;
 import org.proyecto.medijoven.entity.Usuario;
 import org.proyecto.medijoven.service.RolServiceImpl;
 import org.proyecto.medijoven.service.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +34,10 @@ public class UsuarioController {
 		List<Usuario> usuarios = usuarioService.listarUsuarios();
 		List<Rol> roles = rolService.listarRoles();
 		
+		
 		model.addAttribute("usuarios", usuarios);
 		model.addAttribute("roles", roles);
+		
 		
 		return "ListUsuarios";
 	}
@@ -43,7 +45,12 @@ public class UsuarioController {
 	@GetMapping("/usuario")
 	public String viewFormUsuario(Model model) {
 		List<Rol> roles = rolService.listarRoles();
+		List<Medico> medicos = usuarioService.traerMedicosSinRrol();
+		List<Farmaceutico> farmaceuticos = usuarioService.traerFarmeceuticoSinRol();
+		
 		model.addAttribute("roles", roles);
+		model.addAttribute("medicos", medicos);
+		model.addAttribute("farmaceuticos", farmaceuticos);
 		return "AddUsuario";
 	}
 	

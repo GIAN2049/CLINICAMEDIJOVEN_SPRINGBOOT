@@ -16,7 +16,7 @@ public class Autenticacion extends DaoAuthenticationProvider{
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		final Usuario user = usuarioRepository.login(authentication.getName());
+	/*	final Usuario user = usuarioRepository.login(authentication.getName());
 		if((user == null)) {
 			throw new BadCredentialsException("Usuario o Contraseña Incorrectos");
 		}
@@ -25,13 +25,17 @@ public class Autenticacion extends DaoAuthenticationProvider{
 		
 		final Authentication result = super.authenticate(authentication);
 		return new UsernamePasswordAuthenticationToken(user, result.getCredentials(), result.getAuthorities());
+	*/
 		
+		return null;
 	}
 
 	@Override
 	public boolean supports(Class<?> authentication) {
 		// TODO Auto-generated method stub
-		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+		//return authentication.equals(UsernamePasswordAuthenticationToken.class);
+		
+		return false;
 	}
 	
 	

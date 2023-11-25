@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -30,9 +32,31 @@ public class MainController {
 	@Autowired
 	private PacienteServiceImpl servicePaciente;
 	
+	@Autowired
+	private PacienteServiceImpl serviceP;
+	
 	@GetMapping("/login")
 	public String formLogin() {
 		return "login";
+	}
+	
+	@GetMapping("/create-account")
+	public String formCreateAccount() {
+		return "RegisterPacient";
+	}
+	
+	@PostMapping("/registrar")
+	@ResponseBody
+	public HashMap<?, ?> registrarPaciente(Paciente obj, @RequestParam("password") String password){
+		HashMap<String, String> map = new HashMap<String, String>();
+		Paciente objPaciente = serviceP.guardar(obj, password);
+		
+		if(objPaciente != null) {
+			map.put("MENSAJE", "Se registro nuevo paciente");
+		}else {
+			map.put("MENSAJE", "Error al registrar paciente");
+		}
+		return map;
 	}
 	
 	@GetMapping("/dashboard")
@@ -40,7 +64,7 @@ public class MainController {
 		//OBTENER NOMBRE DEL USUARIO
 		String username = auth.getName();
 		Usuario u = servicioUsuario.loginUsuario(username);
-		List<Menu> lista = servicioUsuario.traerMenus(u.getRoles().getIdRol());
+		List<Menu> lista = servicioUsuario.traerMenus(u.getRol().getIdRol());
 		
 		
 		Long countMedicos = service.obtenerCantidadMedicos();
