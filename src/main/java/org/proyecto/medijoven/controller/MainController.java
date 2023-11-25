@@ -76,7 +76,12 @@ public class MainController {
 
 	    model.addAttribute("ENLACES", lista);
 	    model.addAttribute("USUARIO", username);
-	    model.addAttribute("INFOPACIENT", datosPaciente.getId());
+	    if (datosPaciente != null) {
+	        model.addAttribute("INFOPACIENT", datosPaciente.getId());
+	    } else {
+	        
+	        model.addAttribute("INFOPACIENT", "No disponible");
+	    }
 	    
 	    
 	    model.addAttribute("countMedicos", countMedicos);
