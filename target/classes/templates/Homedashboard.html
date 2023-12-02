@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta carset="UTF-8">
+	<!-- start: datatable -->
+	<!-- finish: datatable -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-2 mt-5">
+				<div class="container-fluid">
+					<div class="row gap-3">
+						<div class="card alert alert-success" style="width: 18rem;">
+							<h5 class="p-2">Cantidad de Medicos Registrados</h5>
+							<div class="card-body">
+								<span th:text="${countMedicos}"></span>
+							</div>
+						</div>
+						<div class="card alert alert-primary" style="width: 18rem;">
+							<h5 class="p-2">Cantidad de Medicos Registrados</h5>
+							<div class="card-body">
+								<span th:text="${countPacientes}"></span>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">ULTIMOS PACIENTES REGISTRADOS</h5>
+							<hr>
+							<table id="id_table" class="table table-hover">
+								<thead class="table">
+									<tr>
+										<th class="text-center">Id</th>
+										<th class="text-center">Nombre</th>
+										<th class="text-center">Apellidos</th>
+										<th class="text-center">dni</th>
+										<th class="text-center">Direccion</th>
+										<th class="text-center">Telefono</th>
+										<th class="text-center">Sexo</th>
+										<th class="text-center">Fecha Nacimiento</th>
+									</tr>
+								</thead>
+								<tbody class="fs-7 text-center table-border-bottom-0">
+									<tr th:each="bean: ${pacientes}">
+										<td th:text="${bean.id}"></td>
+										<td th:text="${bean.nombre_paciente}"></td>
+										<td th:text="${bean.apellidos}"></td>
+										<td th:text="${bean.dni}"></td>
+										<td th:text="${bean.direccion}"></td>
+										<td th:text="${bean.telefono}"></td>
+										<td th:text="${bean.sexo}"></td>
+										<td th:text="${bean.fecha_nacimiento}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--<div style="width: 500px; height: 800px;">
+						<canvas id="miGrafico" height="200"></canvas>
+					</div>-->
+
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+</body>
+
+</html>

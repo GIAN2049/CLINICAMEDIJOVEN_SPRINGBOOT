@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- start: datatable -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	<!-- start: Icons -->
+	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+	<!-- start: Icons -->
+	<!-- start: CSS -->
+
+	<link rel="stylesheet" th:href="@{/css/core.css}" />
+	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+
+	<link rel="stylesheet" th:href="@{/css/main.css}">
+	
+	<link rel="stylesheet" th:href="@{/css/perfect-scrollbar.css}">
+	<!-- end: CSS -->
+	<title>Insert title here</title>
+
+	<style>
+
+	</style>
+
+</head>
+
+<body>
+	<div class="layout-wrapper layout-content-navbar layout-without-menu">
+		<div class="layout-container">
+			<!-- Layout container -->
+			<div class="layout-page">
+				<!-- Navbar -->
+
+				<div class="container bg-success">
+					<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center menu-principal"
+						id="layout-navbar">
+						<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+							<!-- menus -->
+							<a class="navbar-brand text-uppercase fw-bold text-decoration-none text-success fs-4"
+								href="#">
+								CLINICA MEDIJOVEN
+							</a>
+
+							<!-- /menus -->
+
+							<ul class="navbar-nav flex-row align-items-center ms-auto">
+
+								<!-- cart shopping -->
+
+								
+								<li class="nav-item lh-1 me-3">
+									<a class="nav-link dropdown-toggle hide-arrow" href="#seccion-1">
+										Sobre Nosotros
+									</a>
+								</li>
+
+
+
+								<li class="nav-item lh-1 me-3">
+									<a class="nav-link dropdown-toggle hide-arrow" href="#seccion-2">
+										Covid - 19
+									</a>
+								</li>
+								
+								<li class="nav-item lh-1 me-3">
+									<a class="nav-link dropdown-toggle hide-arrow" href="#seccion-3">
+										Contactanos
+
+									</a>
+								</li>
+
+							</ul>
+						</div>
+					</nav>
+				</div>
+
+				<!-- / Navbar -->
+				<!-- Content wrapper -->
+				<div class="content-wrapper mt-5">
+					<div class="container-xxl flex-grow-1 container-p-y">
+
+						<!-- start: Slider -->
+
+						<div id="carouselExampleFade" class="carousel slide carousel-fade mt-3">
+							<div class="carousel-inner" style="border-radius: 10px;">
+								<div class="carousel-item active" style="height: 500px;">
+									<img src="https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+										class="d-block w-100" alt="...">
+									<div class="carousel-caption d-none d-md-block">
+										<h2 class="text-shadow">NOS PREOCUPAMOS POR TU SALUD</h2>
+										<a class="btn btn-success rounded-pill" th:href="@{/cuenta/login}">
+											Pide tu cita
+										</a>
+									</div>
+								</div>
+								<div class="carousel-item" style="height: 500px;">
+									<img src="https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+										class="d-block w-100" alt="...">
+								</div>
+								<div class="carousel-item" style="height: 500px;">
+									<img src="https://www.sanna.pe/public/Images/Publicaciones/20230310161402_ED7GaVAm3q.jpg"
+										class="d-block" alt="..." style="height: 100%;">
+								</div>
+							</div>
+							<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+								data-bs-slide="prev">
+								<span class="carousel-control-prev-icon btn btn-primary rounded-pill"
+									aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+								data-bs-slide="next">
+								<span class="carousel-control-next-icon btn btn-primary rounded-pill"
+									aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+							</button>
+						</div>
+
+						<!-- end: Slider -->
+
+						<!-- start: Section 1 -->
+						<section id="seccion-1" class="">
+							<div class="container ">
+								<div class="row">
+									<div class="col-md-6">
+										<h3>SOBRE NOSOTROS</h3>
+									
+										<p>
+											Somos MEDIJOVEN, la red privada de salud más importante del país, resultado de un esfuerzo que ha integrado lo
+											mejor
+											de
+											la medicina peruana, en términos de infraestructura, talento humano, tecnología y buenas prácticas, con la guía
+											continua de Johns Hopkins Medicine International, división internacional de un gran líder mundial en medicina y
+											salud.
+									
+											Nacimos con el objetivo de resolver todas tus necesidades de Pruebsalud. Sea algo sencillo o complejo, un simple
+											resfriado o un trasplante de médula ósea, una consulta ambulatoria o un tratamiento hospitalario, SANNA ofrece
+											una
+											experiencia integral marcada por la excelencia médica y la sensibilidad humana.
+										</p>
+									
+										<div class="row">
+											<div class="col-md-6">
+												<h3>VISION</h3>
+												<hr />
+												<p>Ser el mejor sistema integrado de salud a nivel nacional, brindando acceso a los más altos estándares de
+													calidad
+													y seguridad médica.</p>
+										
+											</div>
+											<div class="col-md-6">
+												<h3>MISION</h3>
+												<hr />
+												<p>Brindamos tranquilidad a los pacientes y sus familias a través de servicios integrados de salud accesibles y
+													de
+													alta calidad, utilizando las mejores prácticas médicas con personal ético y altamente calificado.</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<img class="w-100" src="https://media.istockphoto.com/id/1373659740/es/foto/foto-de-un-joven-m%C3%A9dico-compartiendo-informaci%C3%B3n-de-su-tableta-digital-con-un-paciente-mayor.jpg?b=1&s=612x612&w=0&k=20&c=mavVmMTXW9uD12kfdndlDQbTEqzO5GWEqi3s28o33Lg="/>
+									</div>
+								</div>
+								
+								
+							</div>
+						</section>
+						<!-- End: Section 1 -->
+
+						<!-- start: Section 2 -->
+						<section id="seccion-2">
+							<div class="nav-align-top mb-4">
+								<div class="row g-4" style="height: 522px;">
+									<div class="col-md-4">
+										<ul class="nav flex-column nav-pills mb-3">
+											<li class="nav-item">
+												<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+													data-bs-target="#navs-pills-top-home" aria-controls="navs-pills-top-home" aria-selected="true">
+													Juntos Contra el Covid
+												</button>
+											</li>
+											<li class="nav-item">
+												<button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+													data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile" aria-selected="false">
+													Preguntas Frecuentes
+												</button>
+											</li>
+											<li class="nav-item">
+												<button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+													data-bs-target="#navs-pills-top-messages" aria-controls="navs-pills-top-messages" aria-selected="false">
+													Proceso de Vacunacion
+												</button>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-8">
+										<div class="tab-content">
+									
+											<div class="tab-pane fade show active" id="navs-pills-top-home" role="tabpanel" style="height: 490px;">
+												<div class="card mb-4" style="height: 490px;">
+													<h5 class="card-header">Juntos Contra el Covid</h5>
+													<div class="card-body">
+														<p>
+															Hoy, como sociedad, venimos enfrentando uno de los retos más grandes de
+															salud que nos ha tocado vivir: la aparición de la COVID – 19; una enfermedad
+															que no solo ha desafiado las capacidades de atención en salud del país, sino
+															que exige desde cada una de las personas y, en especial desde quienes
+															trabajamos en el rubro, un alto nivel de organización, coordinación y
+															consciencia preventiva para lograr superarla.
+														</p>
+														<p class="mb-0">
+															Frente a eso y estando en un contexto sin precedentes con desafíos
+															importantes, tenemos la responsabilidad de demostrar que estamos listos para
+															superar al COVID – 19 y detener su expansión.
+														</p>
+														<p class="mb-0">
+															Como SANNA, nuestro compromiso de cuidar la salud se ha mantenido firme.
+															Actualmente, no solo contamos con personal altamente capacitado sino que
+															seguimos trabajando en expandir las capacidades de nuestra red, buscando
+															mejorar los niveles de servicio frente al reto que plantea esta enfermedad.
+														</p>
+														<p class="mb-0">
+															Así, hoy hemos logrado tener una red con sedes y áreas especializadas para
+															la atención del COVID – 19, además de protocolos de seguridad establecidos
+															para minimizar los riesgos de contagio que pudieran generarse. Del mismo
+															modo, al enfrentar esta enfermedad y responder a las necesidades de nuestros
+															pacientes, hemos logrado establecer la atención virtual a través de la
+															telemedicina, tanto de la salud primaria como especializada, complementada
+															con servicios de atención a domicilio para que todos puedan recibir la ayuda
+															que necesitan.
+														</p>
+														<p class="mb-0">
+															Continuamos en la mejora de protocolos y servicios de atención, buscando la
+															mejor calidad y la seguridad en la atención de nuestros pacientes. Nosotros
+															seguiremos brindando la mejor infraestructura posible y capacidad operativa
+															para continuar haciéndole frente a esta enfermedad.
+														</p>
+													</div>
+												</div>
+											
+											</div>
+									
+											<div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel" style="height: 490px;">
+												<div class="card mb-4" style="height: 490px;">
+													<h5 class="card-header">Preguntas Frecuentes</h5>
+													
+													<div class="card-body">
+														<p class="text-success fw-semibold mb-3">
+															Queremos resolver tus dudas sobre el COVID- 19
+														</p>
+														
+														<span class="mb-0">
+															<span class="text-success">Los productos pedidos por delivery, ¿pueden contener COVID? </span>
+															<p>
+																No. Según la Organización Mundial de Salud (OMS), es muy poco probable que una persona contamine
+																productos
+																comerciales; además, el virus que provoca la enfermedad no sobrevive mucho tiempo en paquetes.
+															</p>
+														</span>
+														<span class="mb-0">
+															<span class="text-success">¿Puedo ser contagiado por mi mascota?</span>
+															<p>
+																No. Hasta el momento, no hay casos registrados de gatos o perros que hayan sido infectados o
+																propaguen el
+																virus causante de la enfermedad.
+															</p>
+														</span>
+														<span class="mb-0">
+															<span class="text-success">¿Existe medicamento contra el coronavirus?</span>
+															<p>
+																No, no existe medicina aprobada contra el COVID-19. En la actualidad, existen hay tratamientos
+																paliativos a
+																los síntomas que se tengan, pero su eficacia depende de la gravedad de la enfermedad y de las
+																reacciones de
+																tu propio cuerpo hacia el tratamiento.
+															</p>
+														</span>
+														<span class="mb-0">
+															<span class="text-success">¿Pueden los secadores para las manos eliminar el COVID-19?</span>
+															<p>
+																No. Evitemos usar secadores para las manos porque aumentan la circulación del virus en el aire,
+																puesto que el
+																flujo de ese aire, sea caliente o frío, sopla contra las manos.
+															</p>
+														</span>
+													</div>
+												</div>
+											</div>
+									
+											<div class="tab-pane fade" id="navs-pills-top-messages" role="tabpanel" style="height: 470px;">
+												<div class="card overflow-hidden mb-4" style="height: 470px;">
+													<h5 class="card-header">Proceso de Vacunacion</h5>
+													<div class="card-body" id="vertical-example">
+														<p>
+															De acuerdo a lo anunciado por el Gobierno Peruano,<span class="text-success fw-semibold"> en los siguientes días se desplegará una nueva estrategia
+															territorial para el proceso nacional de vacunación liderado por el Ministerio de Salud </span>. Según lo dispuesto por dicha
+															institución, queremos informar:
+														</p>
+														<ul>
+															<li>
+																El proceso de inscripción y vacunación de asegurados y afiliados por la plataforma "Vacuna para Todos" se encuentra actualmente suspendido.
+															</li>
+															<li>
+																El MINSA nos ha garantizado que las personas que recibieron sus primeras dosis como parte del programa "Vacuna para Todos", recibirán la segunda dosis en la fecha prevista y en el mismo lugar.
+															</li>
+															<li>
+																El listado de personas registradas en la plataforma "Vacuna para Todos" que no recibieron vacuna, ha sido enviado al MINSA, como ente encargado del proceso.
+															</li>
+														</ul>
+														<p>
+															Lamentamos el malestar que los cambios dispuestos pueden generar, los que escapan de nuestro control y voluntad.
+															Desde MEDIJOVEN reafirmamos nuestro compromiso por el bienestar de nuestros afiliados y nuestra disposición a colaborar
+															con las autoridades de Salud para enfrentar al COVID-19 juntos.
+														</p>
+													</div>
+												</div>
+											</div>
+									
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								
+							</div>
+							
+							
+						</section>
+						<!-- End: Section 2 -->
+						
+						<!-- start: Section 3 -->
+						<section id="seccion-3">
+							<div class="row row-cols-2 row-cols-md-3 g-4 py-4" style="width: 80%;">
+								<div class="col-md-6 col-lg-4 mb-3" th:each="bean: ${especialidades}">
+									<div class="card" style="height: 200px;">
+										<div class="card-header" th:text="${bean.nombre}"></div>
+										<div class="card-body">
+											<p th:text="${bean.descripcion}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+						<!-- End: Section 3 -->
+
+					</div>
+
+					<div class="content-backdrop fade"></div>
+				</div>
+				<!-- Content wrapper -->
+			</div>
+			<!-- / Layout page -->
+		</div>
+	</div>
+	
+	 <footer class="content-footer footer bg-footer-theme">
+		<div class="container-xxl d-flex align-items-center justify-content-center  p-3 bg-secondary">
+			<div class="mb-2 h-100 d-flex align-items-center justify-content-center text-white">
+				Copyright 
+				©
+				<script>
+					document.write(new Date().getFullYear());
+				</script>
+				. Todos los derechos reservados.
+				<a href="#" class="footer-link fw-bolder text-white py-5">Clinica Medijoven</a>
+			</div>
+			
+		</div>
+	</footer>
+
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+	<script th:src="@{/js/perfect-scrollbar.js}"></script>
+	
+	<script th:src="@{/js/extended-ui-perfect-scrollbar.js}"></script>
+
+	<script>
+		window.watsonAssistantChatOptions = {
+			integrationID: "19a31bb6-bed8-4b25-9b73-bc8b1bb71f68", // The ID of this integration.
+			region: "us-south", // The region your integration is hosted in.
+			serviceInstanceID: "ce1a64d6-5d71-433f-adc1-6383d5cedeb8", // The ID of your service instance.
+			onLoad: async (instance) => {await instance.render();}
+		};
+		setTimeout(function () {
+			const t = document.createElement('script');
+			t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+			document.head.appendChild(t);
+		});
+	</script>
+
+</body>
+
+</html>

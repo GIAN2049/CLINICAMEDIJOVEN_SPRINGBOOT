@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- start: datatable -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-2">
+				<div class="container-fluid">
+					<div class="card mt-3">
+						<div class="card-body">
+							<h5 class="card-title">Ventas Registradas</h5>
+							<hr>
+							<table id="id_table" class="table" >
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Nombre del producto</th>
+										<th>Cantidad de productos</th>
+										<th>Precio del producto</th>
+										<th>Total a pagar</th>
+										<th class="text-center">Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="venta : ${detalleVenta}">
+										<td th:text="${venta.id}"></td>
+										<td th:text="${venta.farmaco.nombre}"></td>
+										<td th:text="${venta.cantidad}"></td>
+										<td th:text="${venta.precoUnitario}"></td>
+										<td th:text="${venta.precioTotal}"></td>
+										<td class="text-center">
+											<button class="btn btn-info btn-sm d-flex align-items-center gap-2">
+												<i class="ri-file-list-line"></i>
+												Ver Detalle
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+	<!--Datatables-->
+
+	<script th:src="@{https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js}"></script>
+
+
+	<script th:src="@{//cdn.jsdelivr.net/npm/sweetalert2@10}"></script>
+	<script
+		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js}"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#id_table').DataTable({
+				"ordering": false,
+				"pageLength": 8
+			});
+		});
+
+
+	</script>
+	
+</body>
+
+</html>

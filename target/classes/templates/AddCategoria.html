@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- start: datatable -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
+	<title>Insert title here</title>
+</head>
+<style>
+	.help-block[data-bv-for],
+	.help-block[data-bv-result]:not([data-bv-for]) {
+		color: red;
+	}
+
+	/* Cambiar el color del borde de los campos inválidos a rojo */
+	.is-invalid {
+		border-color: red;
+	}
+
+</style>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-4">
+				<div class="container-fluid">
+					<div class="card mt-5">
+						<div class="card-body">
+							<h5>Registro Categoria</h5>
+							<hr>
+							<form id="id_form">
+								<div class="row mb-3">
+									<label class="col-sm-2 col-form-label">Descripcion</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="descripcion">
+									</div>
+								</div>
+								<button type="submit" id="id_registrar" class="btn btn-primary">guardar</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#id_form').bootstrapValidator({
+				fields: {
+					descripcion: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Descripcion es obligatorio'
+							}
+						}
+					}
+				}
+			});
+
+			$("#id_registrar").click(function () {
+				// Lanza la validación
+				$('#id_form').bootstrapValidator('validate');
+
+				// Pregunta si es válido el formulario (Si no tiene errores)
+				if ($('#id_form').data('bootstrapValidator').isValid()) {
+					$.ajax({
+						type: "POST",
+						url: "/medijoven/dashboard/categoria/registrar",
+						data: $('#id_form').serialize(),
+						success: function (data) {
+							// Mostrar mensaje de éxito con SweetAlert2
+							Swal.fire({
+								icon: 'success',
+								title: 'Éxito',
+								text: data.MENSAJE,
+								onClose: function () {
+									$('#id_form').bootstrapValidator('resetForm', true);
+									limpiarFormulario();
+									window.location.href = '/medijoven/dashboard/categorias';
+								}
+							});
+						},
+						error: function (data) {
+							// Mostrar mensaje de error con SweetAlert2
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE,
+								footer: xhr.responseText
+							});
+						}
+					});
+				}
+			});
+
+			// Función para limpiar el formulario (reemplaza esto con tu función real)
+			function limpiarFormulario() {
+				$('#id_form').trigger("reset");
+			}
+		});
+	</script>
+
+
+</body>
+
+</html>
