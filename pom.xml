@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.proyecto</groupId>
 	<artifactId>medijoven</artifactId>
-	<version>proyecto clinica medijoven</version>
+	<version>1.0.0</version>
 	<name>clinicamedijoven</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
