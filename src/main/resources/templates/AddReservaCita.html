@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- start: datatable -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
+	<title>Insert title here</title>
+</head>
+<style>
+	fieldset, legend {
+		all: revert;
+	}
+	
+	.reset{
+		border: 1px solid #d9dee3;
+	}
+</style>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-4">
+				<div class="container-fluid">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title">Registro De Cita Medica</h5>
+							
+						</div>
+						<div class="card-body">
+						
+							<form id="id_form" class="px-2">
+								<fieldset class="row reset alert alert-info">
+								<div class="col-md-5 mb-3">
+									<label class="col-sm-2 col-form-label">Medico</label>
+									<select class="form-select" id="id_medico">
+											<option value="-1">[selecccione medico]</option>
+											<option th:each="p:${medicos}"
+													th:value="${p.id}"
+													th:utext="${p.nombre_medico}"></option>
+										</select>
+								</div>
+								<div class="col-md-5 mb-3">
+									<label class="col-sm-4 col-form-label">Especialidad</label>
+									<select class="form-select" id="id_especialidad">
+											<option value="-1">[selecccione especialidad]</option>
+											<option th:each="p:${especialidades}"
+													th:value="${p.id_especialidad}"
+													th:utext="${p.nombre}"></option>
+										</select>
+								</div>
+								<div class="col d-flex align-items-center  justify-content-end pt-3">
+									<button type="submit" class="btn btn-success d-flex align-items-center" id="id-consultar">
+										<i class="ri-search-line px-2"></i>
+										Buscar
+									</button>
+								</div>
+								</fieldset>
+								<fieldset class="row reset alert alert-primary">
+									<div class="d-flex align-items-center">
+										<span>RESULTADOS DE BUSQUEDA: </span>
+										<span class="px-2" id="total"></span>
+									</div>
+								</fieldset>
+							</form>
+							
+							<div class="mt-5" id="container-result">
+									
+									
+							</div>
+							
+							<div class="card" style="display: none" id="campo_horarios">
+								<div class="card-header">
+									<h3 class="card-title">HORARIOS</h3>
+								</div>
+								<div class="card-body">
+									
+									<table class="table" id="table">
+										<thead>
+											<tr>
+												<th class="text-center">ID</th>
+												<th class="text-center">FECHA</th>
+												<th class="text-center">HORA</th>
+												<th class="text-center">ESTADO</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+										</tbody>
+									</table>
+									
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+	<script type="text/javascript">
+		$("#id-consultar").click(function (e) {
+
+				e.preventDefault();
+
+				var idMedico = $("#id_medico").val();
+				var idEspecialidad = $("#id_especialidad").val();
+
+				$.ajax({
+					url: "/medijoven/dashboard/consulta-medico",
+					data: {
+						idMedico: idMedico,
+						idEspecialidad: idEspecialidad
+					},
+					success: function (response) {
+
+						$("#container-result").empty(); // Limpiar contenedor de cards
+						$("#total").text(response.length);
+						
+						response.forEach(medico => {
+
+							var card = `
+      							<div class="row g-3">
+            						<div class="col-md-4">
+                						<h5 class="mb-3" id="nombre_medico">${medico.nombre_medico}</h5>
+                						<table>
+	                    					<tbody>
+                        						<tr>
+                            						<td>correo</td>
+                            						<td class="px-2" id="#correo">${medico.correo}</td>
+                        						</tr>
+                        						<tr>
+                            						<td>Telefono</td>
+                            						<td class="px-2" id="#telefono">${medico.telefono}</td>
+                        						</tr>
+                    						</tbody>
+                						</table>
+            						</div>
+            						<div class="col-md-4">
+                					<dl class="row">
+                    					<h5 class="mb-3">Especialidad</h5>
+                    					<dd class="col-sm-5" id="#nombre_especialidad">
+	                        				${medico.especialidad.nombre}
+                    					</dd>
+                					</dl>
+            					</div>
+            					<div class="col d-flex align-items-center  justify-content-end pt-3">
+                					<button type="submit" id="id_consulta_horarios" class="btn btn-primary d-flex align-items-center reservar-cita" data-id-medico="${medico.id}">
+                    					consultar horarios
+                					</button>
+            					</div>
+            				<hr/>
+        					</div>
+      							
+    						`;
+
+							$("#container-result").append(card);
+
+						});
+					}
+				});
+
+			});
+			
+			$(document).on("click", "#id_consulta_horarios", function () {
+				$("#campo_horarios").show();
+			});
+			
+			$("#container-result").on("click", ".reservar-cita", function () {
+    			var idMedico = $(this).data("idMedico");
+    			$.get("/medijoven/dashboard/consulta-horario/" + idMedico, function (horarios) {
+        			$(".table tbody").empty();
+        			horarios.forEach(function (horario) {
+						
+						var medico = horario.medico;
+						
+            			var row = `
+                			<tr class="text-center">
+                    			<td>${horario.id}</td>
+                    			<td>${horario.fecha}</td>
+                    			<td>${horario.hora}</td>
+                    			<td>
+                        			<span class="badge rounded-pill bg-success">${horario.estado}</span>
+                    			</td>
+                    			<td>
+                        			<button class="btn btn-eliminar btn-primary fs-7" id="id_registrar" 
+                                		data-id-medico="${idMedico}"
+                                		data-id-especialidad="${medico.especialidad.id_especialidad}"
+                                		data-fecha="${horario.fecha}"
+                                		data-hora="${horario.hora}"
+                                		data-estado="${horario.estado}">
+                            				Reservar
+                        			</button>
+                    			</td>
+                			</tr>
+            			`;
+            			$(".table tbody").append(row);
+        			});
+    			});
+			});
+			
+			$("#table").on("click", "#id_registrar", function(){
+				var idMedico = $(this).data("id-medico");
+				var idEspecialidad = $(this).data("id-especialidad");
+				var fecha = $(this).data("fecha");
+				var hora = $(this).data("hora");
+				var estado = $(this).data("estado");
+				
+				console.log(idMedico)
+				console.log(idEspecialidad)
+				console.log(fecha)
+				console.log(hora)
+				console.log(estado)
+				
+				$.ajax({
+					type:"POST",
+					url: "/medijoven/dashboard/reservar-cita/guardar",
+					data: {
+    			        idMedico: idMedico,
+            			idEspecialidad: idEspecialidad,
+            			fecha: fecha,
+            			hora: hora,
+            			estado: estado
+        			},	
+        			success: function (response) {
+						const swalWithBootstrapButtons = Swal.mixin({
+							customClass: {
+								confirmButton: "btn btn-success",
+							},
+							buttonsStyling: false
+						});
+						swalWithBootstrapButtons.fire({
+							title: "EXITO",
+							text: response.MENSAJE,
+							icon: "success",
+							showCancelButton: false,
+							confirmButtonText: "Ver mis citas",
+							reverseButtons: true
+						}).then((resultadoado) => {
+							if (result.isConfirmed) {
+								window.location.href = '/medijoven/dashboard/mis-citas';
+							}
+						});
+						
+						/*						
+						Swal.fire({
+							icon: 'success',
+							title: 'Éxito',
+							text: response.MENSAJE,
+							onClose: function () {
+								confirmButtonText: "Yes, delete it!"
+								//limpiarFormulario();
+								//window.location.href = '/medijoven/dashboard/recetas';
+							}
+						});*/
+						console.log(response)
+					},
+					error: function (error) {
+						console.error(error)
+					}
+				});
+			});
+			
+			
+			
+			
+	</script>
+
+</body>
+
+</html>

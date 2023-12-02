@@ -3,10 +3,8 @@ package org.proyecto.medijoven.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import org.proyecto.medijoven.entity.Categoria;
-import org.proyecto.medijoven.entity.Farmaco;
 import org.proyecto.medijoven.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

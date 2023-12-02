@@ -43,4 +43,34 @@ public class MedicoServiceImpl implements MedicoService{
 		return repo.consultaMedico(idMedico, idEspecialidad);
 	}
 
+	@Override
+	public List<Medico> consultarMedicoPorEspecialidad(int id) {
+		// TODO Auto-generated method stub
+		return repo.findMedicoByIdEspecialidad(id);
+	}
+
+	@Override
+	public List<Medico> buscarPorNombre(String nombres) {
+		// TODO Auto-generated method stub
+		return repo.findByNombres(nombres);
+	}
+
+	@Override
+	public List<Medico> buscarPorApellido(String apellidos) {
+		// TODO Auto-generated method stub
+		return repo.findByApellidos(apellidos);
+	}
+
+	@Override
+	public List<Medico> listaPorNombreApellidoIgual(String nombre, String apellido) {
+		// TODO Auto-generated method stub
+		return repo.listaMedicoNombreApellido(nombre, apellido);
+	}
+
+	@Override
+	public List<Medico> validarNombreApellidosActualiza(String nombre, String apellido, int idMedico) {
+		// TODO Auto-generated method stub
+		return repo.listaMedicoNombreApellidoIgualActualiza(nombre, apellido, idMedico);
+	}
+
 }

@@ -3,90 +3,93 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/login.css}">
+	<!-- start: Icons -->
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<!-- start: Icons -->
+	<!-- start: CSS -->
+	<link rel="stylesheet" th:href="@{/css/core.css}" />
+	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/page-auth.css}">
 	<title>Intranet</title>
 </head>
 
 <body>
-	<div class="container-fluid ps-md-0">
-		<div class="row g-0">
-			<div class="d-none d-md-flex col-md-8 bg-image">
-				<div class="d-flex align-items-center i-sys">
-					<div class="container col-md-9 col-lg-11 mx-auto info">
-						<h2 class="text-white">
-							Sistema de Información de Gestión Clínica y Administrativa (SIGCA)
-						</h2>
-						<span class="text-white">
-							El Sistema de Información de Gestión Clínica y Administrativa (SIGCA) es una plataforma
-							electrónica creada para la gestión eficiente de una clínica de atención médica. Este sistema
-							permite registrar y mantener datos esenciales relacionados con el cuidado de la salud de los
-							pacientes, así como la administración de la clínica. SIGCA se ha desarrollado siguiendo las
-							mejores prácticas en el marco de la Ley N° 30024, que regula el Registro Nacional de
-							Historias Clínicas Electrónicas (RENHICE) y su reglamento.
-						</span>
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<div class="card">
+				<div class="card-body">
+					<!-- Logo -->
+					<div class="app-brand justify-content-center">
+						<a href="index.html" class="app-brand-link gap-2">
+							<span class="app-brand-logo demo">
+							</span>
+							<span class="app-brand-text demo text-body fw-bolder">MEDIJOVEN</span>
+						</a>
 					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="login d-flex align-items-center py-5">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-9 col-lg-11 mx-auto">
-								<div class="text-center py-3">
-									<h3 class="login-heading mb-4 fw-5">CLINICA MEDIJOVEN</h3>
-                      				<div th:if="${param.logout}">
-										<div class="alert alert-info alert-dismissible" role="alert">
-											Has cerrado Sesion Exitosamente	                        				
-                        					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      					</div>
-									</div>
-									
-									<div th:if="${param.error}">
-										<div class="alert alert-danger alert-dismissible" role="alert">
-                        					Usuario o Contraseña Invalidos	
-                        					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      					</div>
-									</div>
-                      				
-                      				
-                      				
-									<span>Ingrese su usuario y contraseña para acceder al sistema</span>
-								</div>
-								<form th:action="@{/login}" method="post">
-									<div class="form-floating mb-3">
-										<input type="text" class="form-control" id="floatingInput"
-											placeholder="name@example.com" name="username">
-										<label for="floatingInput">Usuario</label>
-									</div>
-									<div class="form-floating mb-3">
-										<input type="password" class="form-control" id="floatingPassword"
-											placeholder="Password" name="password">
-										<label for="floatingPassword">Contraseña</label>
-									</div>
+					<!-- /Logo -->
+					<h4 class="mb-2">Bienvenido a MEDIJOVEN! 👋</h4>
+					<p class="mb-4">Ingresa tus credenciales para ingresar al sistema</p>
 
-									<div class="d-grid">
-										<button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
-											type="submit">Sign in</button>
-									</div>
-								</form>
-								<p class="text-center">
-									<span>Already have an account?</span>
-									<a th:href="@{/create-account}">
-										<span>Sign in instead</span>
-									</a>
-								</p>
+					<form th:action="@{/cuenta/login}" method="post">
+						<div th:if="${param.logout}">
+							<div class="alert alert-info alert-dismissible" role="alert">
+								Has cerrado Sesion Exitosamente
+								<button type="button" class="btn-close" data-bs-dismiss="alert"
+									aria-label="Close"></button>
 							</div>
 						</div>
-					</div>
+
+						<div th:if="${param.error}">
+							<div class="alert alert-danger alert-dismissible" role="alert">
+								Usuario o Contraseña Invalidos
+								<button type="button" class="btn-close" data-bs-dismiss="alert"
+									aria-label="Close"></button>
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label for="email" class="form-label">Username</label>
+							<input type="text" class="form-control" name="username" placeholder="Escriba su usuario"
+								autofocus />
+						</div>
+						<div class="mb-3 form-password-toggle">
+							<div class="d-flex justify-content-between">
+								<label class="form-label" for="password">Password</label>
+							</div>
+							<div class="input-group input-group-merge">
+								<input type="password" id="password" class="form-control" name="password"
+									placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+									aria-describedby="password" />
+								<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+								
+							</div>
+						</div>
+						<div class="mb-3">
+							<button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+						</div>
+					</form>
+					
+					<p class="text-center">
+						<span>No tienes una cuenta?</span>
+						<a th:href="@{/cuenta/crear-cuenta}">
+							<span>crear cuenta</span>
+						</a>
+					</p>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<!-- start: JS -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/helpers.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+	<!-- end: JS -->
 
 
 </body>

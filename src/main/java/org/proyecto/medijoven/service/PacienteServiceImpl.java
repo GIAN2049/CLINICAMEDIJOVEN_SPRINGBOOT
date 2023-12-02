@@ -40,7 +40,7 @@ public class PacienteServiceImpl implements PacienteService {
 
 	@Override
 	@Transactional
-	public Paciente guardar(Paciente obj, String password) {
+	public Paciente guardar(Paciente obj) {
 		// TODO Auto-generated method stub
 		/*try {
 			Usuario user = new Usuario();

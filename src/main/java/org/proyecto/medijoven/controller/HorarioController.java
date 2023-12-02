@@ -35,7 +35,7 @@ public class HorarioController {
 		List<Medico> medicos = medicoService.listarTodos();
 		model.addAttribute("horarios", horarios);
 		model.addAttribute("medicos", medicos);
-		return "ListEspecialidades";
+		return "ListHorarios";
 	}
 	
 	@GetMapping("/horario")

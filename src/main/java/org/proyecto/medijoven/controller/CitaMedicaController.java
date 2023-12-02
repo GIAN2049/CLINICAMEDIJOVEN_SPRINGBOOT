@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.proyecto.medijoven.entity.CitaMedica;
 import org.proyecto.medijoven.entity.Especialidad;
-import org.proyecto.medijoven.entity.Horario;
+import org.proyecto.medijoven.entity.Farmaco;
 import org.proyecto.medijoven.entity.Medico;
 import org.proyecto.medijoven.entity.Paciente;
 import org.proyecto.medijoven.service.CitasMedicasService;
 import org.proyecto.medijoven.service.EspecialidadService;
-import org.proyecto.medijoven.service.HorarioService;
 import org.proyecto.medijoven.service.MedicoService;
 import org.proyecto.medijoven.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -39,8 +36,6 @@ public class CitaMedicaController {
 	private MedicoService medicoService;
 	@Autowired
 	private EspecialidadService especialidadService;
-	@Autowired
-	private HorarioService horarioService;
 	
 	@GetMapping("citas-medicas")
 	public String listaCitaMedica(Model model) {
@@ -53,24 +48,20 @@ public class CitaMedicaController {
 	public String viewFormCitaMedica(Model model) {
 		List<Paciente> pacientes = pacienteService.listarTodos();
 		List<Medico> medicos = medicoService.listarTodos();
+		List<Especialidad> especialidades = especialidadService.listarTodos();
 		
-		Paciente paciente = (Paciente) model.getAttribute("INFOPACIENT");
 		model.addAttribute("pacientes", pacientes);
 		model.addAttribute("medicos", medicos);
-		
-		List<Especialidad> especialidades = especialidadService.listarTodos();
-		model.addAttribute("especialidades", especialidades);
+		model.addAttribute("especialidades", especialidades);		
 		
 		return "AddCitaMedica";
 	}
 	
-
-	
 	@PostMapping("/cita-medica/registrar")
 	@ResponseBody
 	public HashMap<String, String> registrarCitaMedica(CitaMedica obj) {
+		
 		HashMap<String, String> response = new HashMap<>();
-
 		try {
 			CitaMedica nuevaCita = citaMedicaService.guardarCitaMedica(obj);
 			if (nuevaCita != null) {
@@ -86,7 +77,14 @@ public class CitaMedicaController {
 		return response;
 	}
 	
+	@GetMapping("/buscar/medico/especialidad/{id}")
 	@ResponseBody
+	public List<Medico> buscarMedicoEspecialidad(@PathVariable int id) {
+		List<Medico> objMedico = medicoService.consultarMedicoPorEspecialidad(id);
+		return objMedico;
+	}
+	
+	/*@ResponseBody
 	@GetMapping("/consulta-medico")
 	public List<Medico> consultaMedico(int idMedico, int idEspecialidad) {
 		return medicoService.consultaMedico(idMedico, idEspecialidad);
@@ -98,10 +96,6 @@ public class CitaMedicaController {
 		return horarioService.obtenerHorarioPorMedico(id);
 	}
 
-	
-	
-	
-	
 	@GetMapping("/buscar/cita-medica/{id}")
 	@ResponseBody
 	public CitaMedica buscar(@PathVariable int id) {
@@ -130,7 +124,7 @@ public class CitaMedicaController {
 
 		return map;
 	}
-	
+	*/
 	/*
 	@DeleteMapping("/cita-medica/eliminar-y-registrar/{id}")
     @ResponseBody

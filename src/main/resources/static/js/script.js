@@ -14,14 +14,14 @@ $(document).ready(function() {
         $(this).parent().toggleClass('focused')
     })
 
-    /*$('.sidebar-toggle').click(function() {
+    $('.sidebar-toggle').click(function() {
         $('.sidebar').toggleClass('collapsed')
 
         $('.sidebar.collapsed').mouseleave(function() {
             $('.sidebar-dropdown-menu').slideUp('fast')
             $('.sidebar-menu-item.has-dropdown, .sidebar-dropdown-menu-item.has-dropdown').removeClass('focused')
         })
-    })*/
+    })
 
     $('.sidebar-overlay').click(function() {
         $('.sidebar').addClass('collapsed')
@@ -34,4 +34,8 @@ $(document).ready(function() {
         $('.sidebar').addClass('collapsed')
     }
     // end: Sidebar
+
+
+
+   
 })

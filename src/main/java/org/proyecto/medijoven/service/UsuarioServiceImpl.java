@@ -19,8 +19,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Autowired
 	private IUsuarioRepository usuarioRepository;
 	
-	//@Autowired
-	//private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	public Usuario loginUsuario(String username) {
 		return usuarioRepository.login(username);
@@ -34,7 +34,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario registrarUsuario(Usuario obj) {
 		// TODO Auto-generated method stub
 		//PARA ENCRIPTAR LA CONTRASEÑA
-		//obj.setPassword(passwordEncoder.encode(obj.getPassword()));	
+		obj.setPassword(passwordEncoder.encode(obj.getPassword()));	
 		return usuarioRepository.save(obj);
 	}
 

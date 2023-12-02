@@ -52,6 +52,17 @@ public class CitasMedicasServiceImpl implements CitasMedicasService{
 		repo.deleteById(id);
 	}
 
+	@Override
+	public List<CitaMedica> listarCitasProgramadas() {
+		// TODO Auto-generated method stub
+		return repo.listCitasProgramadas();
+	}
+
+	@Override
+	public List<CitaMedica> listarCitasCanceladasPorId(int idPaciente) {
+		// TODO Auto-generated method stub
+		return repo.listarCitasCanceladasPorId(idPaciente);
+	}
 	
 
 }

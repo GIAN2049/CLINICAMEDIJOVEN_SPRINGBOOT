@@ -3,16 +3,18 @@
 
 <head>
 	<meta charset="UTF-8">
-	<!-- start: styles -->
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<!-- finish: styles -->
 	<!-- start: datatable -->
 	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
 	<!-- finish: datatable -->
-	<!-- start: Icons -->
-	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
-	<!-- finish: icons -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
 	<title>Insert title here</title>
 </head>
 <style>
@@ -26,12 +28,6 @@
 		border-color: red;
 	}
 	
-	/*.form-control:focus {
-    	color: var(--bs-body-color);
-    	background-color: var(--bs-body-bg);
-    	border-color: #86b7fe;
-    	outline: 0;
-	}*/
 </style>
 
 <body>
@@ -43,7 +39,7 @@
 				<div class="container-fluid">
 					<div class="card mt-5">
 						<div class="card-body">
-							<h5>Registro de Empleado</h5>
+							<h5>Registro de Farmaceutico</h5>
 							<hr>
 							<form id="id_form" class="row g-3">
 								<div class="col-md-6">
@@ -96,9 +92,8 @@
 
 
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/js/global.js}"></script>
-	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
 
 
@@ -138,8 +133,8 @@
 								text: data.MENSAJE,
 								onClose: function () {
 									$('#id_form').bootstrapValidator('resetForm', true);
+									window.location.href = '/medijoven/dashboard/farmaceuticos';
 									limpiarFormulario();
-									//window.location.href = '/medijoven/dashboard/medicos';
 								}
 							});
 						},

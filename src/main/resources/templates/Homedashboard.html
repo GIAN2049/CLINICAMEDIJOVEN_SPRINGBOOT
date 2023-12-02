@@ -3,19 +3,17 @@
 
 <head>
 	<meta carset="UTF-8">
-	<!-- start: styles -->
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	
-	
-	
-	<!--   -->
-	<!-- finish: styles -->
-	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- start: datatable -->
 	<!-- finish: datatable -->
-	<!-- start: Icons -->
-	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
-	<!-- finish: icons -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
 	<title>Insert title here</title>
 </head>
 
@@ -37,12 +35,6 @@
 							<h5 class="p-2">Cantidad de Medicos Registrados</h5>
 							<div class="card-body">
 								<span th:text="${countPacientes}"></span>
-							</div>
-						</div>
-						<div class="card alert alert-dark" style="width: 18rem;">
-							<h5 class="p-2">Cantidad de Citas Medicas</h5>
-							<div class="card-body">
-								
 							</div>
 						</div>
 					</div>
@@ -90,58 +82,9 @@
 
 
 
-	<script th:src="@{/js/jquery-3.7.1.js}"></script>
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
-
-	<!-- libreria para graficos -->
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-	<script text="text/javascript">
-		var ctx = document.getElementById("miGrafico").getContext("2d");
-		var data = {
-			labels: [], // Deja las etiquetas vacías inicialmente
-			datasets: [
-				{
-					data: [], // Déjalo vacío inicialmente
-					backgroundColor: ["blue", "green", "red", "orange"],
-				},
-			],
-		};
-
-		var miGrafico = new Chart(ctx, {
-			type: "bar",
-			data: data,
-			options: {
-				responsive: true,
-				legend: {
-					display: false,
-				},
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								beginAtZero: true,
-							},
-						},
-					],
-				},
-			},
-		});
-
-		fetch("/medijoven/dashboard/datos")
-			.then((response) => response.json())
-			.then((responseData) => {
-				// Actualiza las etiquetas y datos del gráfico con la respuesta del servidor
-				miGrafico.data.labels = ["Médicos", "Pacientes"];
-				miGrafico.data.datasets[0].data = [responseData.countMedicos, responseData.countPacientes];
-				miGrafico.update(); // Actualiza el gráfico para reflejar los nuevos datos
-			})
-			.catch((error) => console.error("Error al obtener datos:", error));
-	</script>
-
-
-
 
 </body>
 

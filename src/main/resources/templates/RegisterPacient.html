@@ -3,22 +3,15 @@
 
 <head>
 	<meta charset="UTF-8">
-	<!-- start: styles -->
-	<!--<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/style.css}">-->
-	
-	<link rel="stylesheet" th:href="@{/css/core.css}">
-	<link rel="stylesheet" th:href="@{/css/theme-default.css}">
-	<link rel="stylesheet" th:href="@{/css/pages/page-auth.css}">
-	
+		<!-- start: Icons -->
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-	<!-- finish: styles -->
-	<!-- start: datatable -->
-	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
-	<!-- finish: datatable -->
 	<!-- start: Icons -->
-	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
-	<!-- finish: icons -->
+	<!-- start: CSS -->
+	<link rel="stylesheet" th:href="@{/css/core.css}" />
+	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/page-auth.css}">
+	<!-- end: CSS -->
 	<title>Insert title here</title>
 </head>
 
@@ -27,58 +20,59 @@
 		<div class="authentication-wrapper authentication-basic container-p-y">
 			<div class="authentication-inner">
 				<!-- Register Card -->
-				<div class="card">
+				<div class="card" style="width: 500px;">
 					<div class="card-body">
 						<!-- Logo -->
 						<div class="app-brand justify-content-center">
 							<a href="index.html" class="app-brand-link gap-2">
-								<span class="app-brand-logo demo">
-									ss
-								</span>
-								<span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+								<span class="app-brand-text demo text-body fw-bolder">MEDIJOVEN</span>
 							</a>
 						</div>
 						<!-- /Logo -->
-						<h4 class="mb-2">Adventure starts here 🚀</h4>
-						<p class="mb-4">Make your app management easy and fun!</p>
+						<h4 class="mb-3">Crear Cuenta! 🚀</h4>
 
-						<form id="id_form" class="mb-3">
-							<div class="mb-3">
+						<form id="id_form" class="mb-3 row g-3">
+							<div class="col-md-6">
 								<label for="nombre" class="form-label">Nombre</label>
 								<input type="text" class="form-control" id="nombre" name="nombre_paciente"
 									placeholder="Enter your username" autofocus />
 							</div>
-							<div class="mb-3">
+							<div class="col-md-6">
 								<label for="apellido" class="form-label">Apellidos</label>
 								<input type="text" class="form-control" id="apellido" name="apellidos"
 									placeholder="Enter your username" autofocus />
 							</div>
-							<div class="mb-3">
+							<div class="col-md-6">
 								<label for="dni" class="form-label">Dni</label>
 								<input type="text" class="form-control" id="dni" name="dni"
 									placeholder="Enter your username" autofocus />
 							</div>
-							<div class="mb-3">
-								<label for="direccion" class="form-label">Direccion</label>
-								<input type="text" class="form-control" id="direccion" name="direccion"
-									placeholder="Enter your username" autofocus />
-							</div>
-							<div class="mb-3">
+							<div class="col-md-6">
 								<label for="telefono" class="form-label">Telefono</label>
 								<input type="text" class="form-control" id="telefono" name="telefono"
 									placeholder="Enter your username" autofocus />
 							</div>
-							<div class="mb-3">
+							<div class="col-md-12">
+								<label for="direccion" class="form-label">Direccion</label>
+								<input type="text" class="form-control" id="direccion" name="direccion"
+									placeholder="Enter your username" autofocus />
+							</div>
+							
+							<div class="col-md-6">
 								<label for="sexo" class="form-label">Sexo</label>
 								<input type="text" class="form-control" id="sexo" name="sexo"
 									placeholder="Enter your username" autofocus />
 							</div>
-							<div class="mb-3">
+							<div class="col-md-6">
 								<label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
 								<input type="date" class="form-control" id="fechaNacimiento" name="Fecha_nacimiento"
 									placeholder="Enter your username" autofocus />
 							</div>
-							<div class="mb-3 form-password-toggle">
+							<div class="col-md-6">
+								<label for="email" class="form-label">Username</label>
+								<input type="text" class="form-control" name="username" placeholder="Escriba su usuario" autofocus />
+							</div>
+							<div class="col-md-6 form-password-toggle">
 								<label class="form-label" for="password">Password</label>
 								<div class="input-group input-group-merge">
 									<input type="password" id="password" class="form-control" name="password"
@@ -89,6 +83,12 @@
 							</div>
 							<button type="submit" class="btn btn-primary d-grid w-100" id="id_registrar">Crear Cuenta</button>
 						</form>
+						<p class="text-center">
+						<span>Ya tienes una cuenta?</span>
+						<a th:href="@{/cuenta/login}">
+							<span>Inicia Sesion</span>
+						</a>
+					</p>
 					</div>
 				</div>
 				<!-- Register Card -->
@@ -99,9 +99,10 @@
 	
 	
 	
-
-	<script th:src="@{/js/jquery-3.7.1.js}"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/helpers.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script
@@ -109,12 +110,115 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-		
+			
+			
+			$('#id_form').bootstrapValidator({
+				fields: {
+					nombre_paciente: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Nombre es obligatorio'
+							},
+							stringLength: {
+								message: 'El Nombre es de 2 a 40 caracteres',
+								min: 2,
+								max: 40
+							}
+						}
+					},
+					apellidos: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Apellidos es obligatorio'
+							},
+							stringLength: {
+								message: 'El Apellido es de 2 a 40 caracteres',
+								min: 2,
+								max: 40
+							}
+
+						}
+					},
+					dni: {
+						validators: {
+							notEmpty: {
+								message: 'Campo DNI es obligatorio'
+							},
+							stringLength: {
+								min: 8,
+								max: 8,
+								message: 'El DNI debe tener exactamente 8 digitos'
+							},
+							regexp: {
+								regexp: /^[0-9]+$/,
+								message: 'El DNI solo puede contener dígitos numéricos'
+							}
+						}
+					},
+					direccion: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Dirección es obligatorio'
+							}
+						}
+					},
+					username: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Username es obligatorio'
+							}
+						}
+					},
+					telefono: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Teléfono es obligatorio'
+							},
+							stringLength: {
+								min: 9,
+								max: 9,
+								message: 'El Telefono debe tener exactamente 9 digitos'
+							},
+							regexp: {
+								regexp: /^[0-9]+$/,
+								message: 'El Telefono solo puede contener dígitos numéricos'
+							}
+						}
+					},
+					sexo: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Sexo es obligatorio'
+							}
+						}
+					},
+					password: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Contraseña es obligatorio'
+							}
+						}
+					},
+					Fecha_nacimiento: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Fecha de nacimiento es obligatorio'
+							}
+						}
+					}
+				}
+			});
+			
+			
 			$("#id_registrar").click(function () {
-				
-				$.ajax({
+
+				$('#id_form').bootstrapValidator('validate');
+
+				if ($('#id_form').data('bootstrapValidator').isValid()) {
+
+					$.ajax({
 						type: "POST",
-						url: "/registrar",
+						url: "/cuenta/registrar",
 						data: $('#id_form').serialize(),
 						success: function (data) {
 							// Mostrar mensaje de éxito con SweetAlert2
@@ -137,8 +241,12 @@
 							});
 						}
 					});
-				
-				
+
+				}
+
+
+
+
 			});
 
 			// Función para limpiar el formulario (reemplaza esto con tu función real)

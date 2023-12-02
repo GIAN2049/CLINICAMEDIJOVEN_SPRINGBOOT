@@ -3,17 +3,18 @@
 
 <head>
 	<meta charset="UTF-8">
-	<!-- start: styles -->
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<!-- finish: styles -->
 	<!-- start: datatable -->
-	<!--<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css}">-->
 	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
 	<!-- finish: datatable -->
-	<!-- start: Icons -->
-	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
-	<!-- finish: icons -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
 	<title>Insert title here</title>
 </head>
 
@@ -116,8 +117,8 @@
 	</main>
 
 
-	<script th:src="@{/js/jquery-3.7.1.js}"></script>
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
 
 	<!--Datatables-->

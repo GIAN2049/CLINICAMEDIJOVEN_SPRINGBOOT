@@ -3,17 +3,18 @@
 
 <head>
 	<meta charset="UTF-8">
-	<!-- start: styles -->
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<!-- finish: styles -->
 	<!-- start: datatable -->
 	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
 	<!-- finish: datatable -->
-	<!-- start: Icons -->
-	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
-	<!-- finish: icons -->
-	<title>Insert title here</title>
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
 </head>
 <style>
 	.help-block[data-bv-for],
@@ -25,13 +26,6 @@
 	.is-invalid {
 		border-color: red;
 	}
-
-	/*.form-control:focus {
-    	color: var(--bs-body-color);
-    	background-color: var(--bs-body-bg);
-    	border-color: #86b7fe;
-    	outline: 0;
-	}*/
 </style>
 
 <body>
@@ -59,14 +53,7 @@
 										</option>
 									</select>
 								</div>
-								<div class="col-md-6">
-									<label class="col-sm-2 col-form-label">Médico</label>
-									<select class="form-select" name="medico" id="id-medico">
-										<option selected>[seleccione médico]</option>
-										<option th:each="m:${medicos}" th:value="${m.id}" th:utext="${m.nombre_medico}">
-										</option>
-									</select>
-								</div>
+								
 								<div class="col-md-6">
 									<label class="col-sm-10 col-form-label">Especialidad</label>
 									<select class="form-select" name="especialidad" id="id-especialidad">
@@ -76,6 +63,17 @@
 										</option>
 									</select>
 								</div>
+								
+								<div class="col-md-6">
+									<label class="col-sm-2 col-form-label">Médico</label>
+									<select class="form-select" name="medico" id="id-medico">
+										<option selected>[seleccione médico]</option>
+										<!--<option selected>[seleccione médico]</option>
+										<option th:each="m:${medicos}" th:value="${m.id}" th:utext="${m.nombre_medico}">
+										</option>-->
+									</select>
+								</div>
+								
 								<div class="col-md-6">
 									<label class="col-sm-2 col-form-label">Categoría</label>
 									<select class="form-select" name="categoria" id="id-categoria">
@@ -107,9 +105,8 @@
 
 
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/js/global.js}"></script>
-	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
 
 
@@ -125,10 +122,10 @@
 				icon: 'success',
 				title: 'Éxito',
 				text: msj,
-				timer: 2000, // Tiempo de duración del mensaje en milisegundos
-				position: 'top-end', // Posición del mensaje en la pantalla
-				toast: true, // Hace que la alerta se muestre como un toast
-				showConfirmButton: false // Oculta el botón de confirmación
+				timer: 2000, 
+				position: 'top-end', 
+				toast: true, 
+				showConfirmButton: false 
 			});
 	</script>
 
@@ -137,7 +134,8 @@
 
 		$(document).ready(function () {
 			let codigoFarmaco = 0;
-
+			let codicoMedico = 0;
+			
 			$(document).on("change", "#id-categoria", function () {
 				let cod = $(this).val();
 				$.get("buscar/farmaco/categoria/" + cod, function (response) {
@@ -152,15 +150,28 @@
 				})
 
 			})
+						
+			$(document).on("change", "#id-especialidad", function () {
+				let cod = $(this).val();
+				$.get("buscar/medico/especialidad/" + cod, function (response) {
+					//limpiar combo
+					$("#id-medico").empty().append("<option selected>[selecccione medico]</option>")
+					//bucle
+					$.each(response, function (index, value) {
+						$("#id-medico").append("<option value='" + value.id + "'>" + value.nombre_medico + ' ' + value.apellidos_medico + "</option>");
+						console.log(response)
+					})
+					//marcar codigo de tipo de medicamento segun el medicamento seleccionado
+					$("#id-medico").val(codicoMedico)
+				})
+
+			})
+			
 
 			// Función para limpiar el formulario (reemplaza esto con tu función real)
 			function limpiarFormulario() {
 				$('#id_form').trigger("reset");
 			}
-	
-	
-			//console.log("Datos a enviar al servidor:", $('#id_form').serialize());
-
 			
 			$("#id_form").submit(function (event) {
 					event.preventDefault();
@@ -190,9 +201,6 @@
 						}
 					});
 				});
-		
-		
-
 		});
 	</script>
 

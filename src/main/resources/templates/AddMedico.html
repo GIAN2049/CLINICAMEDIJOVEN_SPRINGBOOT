@@ -3,18 +3,19 @@
 
 <head>
 	<meta charset="UTF-8">
-	<!-- start: styles -->
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	
-
-	<!-- finish: styles -->
 	<!-- start: datatable -->
 	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
 	<!-- finish: datatable -->
-	<!-- start: Icons -->
-	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
-	<!-- finish: icons -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
+
 	<title>Insert title here</title>
 </head>
 <style>
@@ -22,18 +23,6 @@
 	.help-block[data-bv-result]:not([data-bv-for]) {
 		color: red;
 	}
-
-	/* Cambiar el color del borde de los campos inválidos a rojo */
-	.is-invalid {
-		border-color: red;
-	}
-	
-	/*.form-control:focus {
-    	color: var(--bs-body-color);
-    	background-color: var(--bs-body-bg);
-    	border-color: #86b7fe;
-    	outline: 0;
-	}*/
 </style>
 
 <body>
@@ -41,9 +30,10 @@
 	<main class="bg-light">
 		<div class="p-2">
 			<div th:insert="~{layout/dashboard::navbar}"></div>
+			
 			<div class="py-4">
 				<div class="container-fluid">
-					<div class="card mt-5">
+					<div class="card mt-3">
 						<div class="card-body">
 							<h5>Registro Medico</h5>
 							<hr>
@@ -75,7 +65,7 @@
 								<div class="col-md-6">
 									<label class="col-sm-2 col-form-label">Sexo</label>
 									<select class="form-select" name="sexo">
-										<option selected>[selecccion sexo]</option>
+										<option value="">[selecccion sexo]</option>
 										<option value="masculino">Masculino</option>
 										<option value="femenino">Femenino</option>
 									</select>
@@ -83,7 +73,7 @@
 								<div class="col-md-6">
 									<label class="col-sm-5 col-form-label">Especialidad</label>
 									<select class="form-select" name="especialidad">
-										<option selected>[selecccione medico]</option>
+										<option value="">[selecccione medico]</option>
 										<option th:each="m:${especialidades}"
 											    th:value="${m.id_especialidad}"
 											    th:utext="${m.nombre}"></option>
@@ -104,25 +94,113 @@
 	</main>
 
 
-
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/js/global.js}"></script>
-	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
 
 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
-
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$('#id_form').bootstrapValidator({
 				fields: {
-					descripcion: {
+					nombre_medico: {
 						validators: {
 							notEmpty: {
-								message: 'Campo Descripcion es obligatorio'
+								message: 'Campo Nombre es obligatorio'
+							},
+							stringLength: {
+								message: 'El Nombre es de 2 a 40 caracteres',
+								min: 2,
+								max: 40
+							},
+							remote : {
+								delay : 1000,
+								url : 'validarNombreMedico',
+								message : 'El nombre ingresado ya existe'
+							}
+						}
+					},
+					apellidos_medico: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Apellidos es obligatorio'
+							},
+							stringLength: {
+								message: 'El Apellido es de 2 a 40 caracteres',
+								min: 2,
+								max: 40
+							},
+							remote : {
+								delay : 1000,
+								url : 'validadApellidoMedico',
+								message : 'El nombre ingresado ya existe'
+							}
+
+						}
+					},
+					dni: {
+						validators: {
+							notEmpty: {
+								message: 'Campo DNI es obligatorio'
+							},
+							stringLength: {
+								min: 8,
+								max: 8,
+								message: 'El DNI debe tener exactamente 8 digitos'
+							},
+							regexp: {
+								regexp: /^[0-9]+$/,
+								message: 'El DNI solo puede contener dígitos numéricos'
+							}
+						}
+					},
+					direccion: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Dirección es obligatorio'
+							}
+						}
+					},
+					correo: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Correo es obligatorio'
+							},
+							emailAddress: {
+								message: 'Ingresa una dirección de correo electrónico válida'
+							}
+						}
+					},
+					telefono: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Teléfono es obligatorio'
+							},
+							stringLength: {
+								min: 9,
+								max: 9,
+								message: 'El Telefono debe tener exactamente 9 digitos'
+							},
+							regexp: {
+								regexp: /^[0-9]+$/,
+								message: 'El Telefono solo puede contener dígitos numéricos'
+							}
+						}
+					},
+					sexo: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Sexo es obligatorio'
+							}
+						}
+					},
+					especialidad: {
+						validators: {
+							notEmpty: {
+								message: 'Campo Especialidad es obligatorio'
 							}
 						}
 					}

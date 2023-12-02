@@ -12,6 +12,7 @@ import org.proyecto.medijoven.service.MedicoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,13 +75,18 @@ public class MedicoController {
 	@ResponseBody
 	public HashMap<?, ?> actualizarMedico(@PathVariable int id, Medico obj){
 		HashMap<String, String> map = new HashMap<String, String>();
-		Medico objEspecialidad = service.buscarPorId(id);
-		if(objEspecialidad!=null) {
-			service.guardar(obj);
-			map.put("MENSAJE", "Se actualizo medico");
-		}else {
-			map.put("MENSAJE", "Error al actualizar medico");
+		Medico objMedico = service.buscarPorId(id);
+		
+		List<Medico> lstSalida = service.validarNombreApellidosActualiza(obj.getNombre_medico(),
+				obj.getApellidos_medico(), objMedico.getId());
+		
+		if(!CollectionUtils.isEmpty(lstSalida)) {
+			map.put("mensaje", "El Medico " + obj.getNombre_medico() + " " + obj.getApellidos_medico() + " ya existe.");
+			return map;
 		}
+			
+		service.guardar(obj);
+		map.put("MENSAJE", "Se actualizo medico");
 		
 		return map;
 	}
@@ -97,6 +103,29 @@ public class MedicoController {
 			map.put("MENSAJE", "Error al Eliminar medico");
 		}
 		return map;
+	}
+	
+	
+	@GetMapping("/validarNombreMedico")
+	@ResponseBody
+	public String validarNombre(String nombres) {
+		List<Medico> lstAutor = service.buscarPorNombre(nombres);
+		if(CollectionUtils.isEmpty(lstAutor)) {
+			return "{\"valid\":true}";
+		}else {
+			return "{\"valid\":false}";
+		}
+	}
+	
+	@GetMapping("/validadApellidoMedico")
+	@ResponseBody
+	public String validarApellido(String apellidos) {
+		List<Medico> lstAutor = service.buscarPorApellido(apellidos);
+		if(CollectionUtils.isEmpty(lstAutor)) {
+			return "{\"valid\":true}";
+		}else {
+			return "{\"valid\":false}";
+		}
 	}
 	
 

@@ -49,8 +49,4 @@ public class CitaMedica {
     
     @Column(name = "estado_cita")
     private String estadoCita;
-
-    @Column(name = "observaciones")
-    private String observaciones;
-   
 }

@@ -55,7 +55,7 @@ public class PacienteController {
 	@ResponseBody
 	public HashMap<?, ?> registrarPaciente(Paciente obj, @RequestParam("password") String password){
 		HashMap<String, String> map = new HashMap<String, String>();
-		Paciente objPaciente = service.guardar(obj, password);
+		Paciente objPaciente = service.guardar(obj);
 		
 		if(objPaciente != null) {
 			map.put("MENSAJE", "Se registro nuevo paciente");

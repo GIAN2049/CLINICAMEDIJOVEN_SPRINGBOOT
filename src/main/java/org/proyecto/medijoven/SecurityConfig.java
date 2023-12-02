@@ -44,12 +44,13 @@ public class SecurityConfig{
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests((auth) -> {
 			auth.requestMatchers("/css/**", "/img/**", "/js/**").permitAll();
-			auth.requestMatchers("/create-account").permitAll();
-			auth.requestMatchers("/registrar").permitAll();
+			auth.requestMatchers("/cuenta/crear-cuenta").permitAll();
+			auth.requestMatchers("/cuenta/registrar").permitAll();
 			auth.requestMatchers("/medijoven/dashboard/inicio").hasRole("ADMINISTRADOR");
+			auth.requestMatchers("/").permitAll();
 			auth.anyRequest().authenticated();
 		}).formLogin(form -> form
-				.loginPage("/login")
+				.loginPage("/cuenta/login")
 				.permitAll()
 				.defaultSuccessUrl("/dashboard"))
 		.logout((log) -> log

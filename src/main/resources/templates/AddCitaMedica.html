@@ -3,34 +3,30 @@
 
 <head>
 	<meta charset="UTF-8">
-	<!-- start: styles -->
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<!-- finish: styles -->
 	<!-- start: datatable -->
 	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
 	<!-- finish: datatable -->
-	<!-- start: Icons -->
-	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
-	<!-- finish: icons -->
-	<title>Insert title here</title>
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
 </head>
 <style>
-	.help-block[data-bv-for],
-	.help-block[data-bv-result]:not([data-bv-for]) {
-		color: red;
-	}
-	
-	.is-invalid {
-		border-color: red;
-	}
-	
 	fieldset, legend {
 		all: revert;
 	}
 	
 	.reset{
 		border: 1px solid #d9dee3;
+	}
+	
+	.border{
+		border: 1px solid rgb(0, 128, 255);
 	}
 </style>
 
@@ -48,68 +44,50 @@
 						</div>
 						<div class="card-body">
 						
-							<form id="id_form" class="px-2" th:action="@{/cita-medica/medico}">
-								<fieldset class="row reset alert alert-info">
-								<div class="col-md-5 mb-3">
-									<label class="col-sm-2 col-form-label">Medico</label>
-									<select class="form-select" id="id_medico">
-											<option value="-1">[selecccione medico]</option>
-											<option th:each="p:${medicos}"
-													th:value="${p.id}"
-													th:utext="${p.nombre_medico}"></option>
-										</select>
-								</div>
-								<div class="col-md-5 mb-3">
+							<form id="id_form" class="row g-4">
+								
+								<div class="col-md-6 mb-3">
 									<label class="col-sm-4 col-form-label">Especialidad</label>
-									<select class="form-select" id="id_especialidad">
-											<option value="-1">[selecccione paciente]</option>
+									<select class="form-select" id="id_especialidad" name="especialidad">
+											<option value="-1">[selecccione especialidad]</option>
 											<option th:each="p:${especialidades}"
 													th:value="${p.id_especialidad}"
 													th:utext="${p.nombre}"></option>
 										</select>
 								</div>
+								
+								<div class="col-md-6 mb-3">
+									<label class="col-sm-2 col-form-label">Medico</label>
+									<select class="form-select" id="id_medico" name="medico">
+									</select>
+								</div>
+								
+								<div class="col-md-6 mb-3">
+									<label class="col-sm-4 col-form-label">Paciente</label>
+									<select class="form-select" id="id_paciente" name="paciente">
+											<option value="-1">[selecccione paciente]</option>
+											<option th:each="p:${pacientes}"
+													th:value="${p.id}"
+													th:utext="${p.nombre_paciente + ' ' + p.apellidos}"></option>
+									</select>
+								</div>
+								
+								<div class="col-md-6">
+									<label class="col-sm-2 col-form-label">Fecha</label>
+									<input type="date" class="form-control" name="fechaCita">
+								</div>
+								<div class="col-md-6">
+									<label class="col-sm-2 col-form-label">Hora</label>
+									<input type="time" class="form-control" name="hora">
+								</div>
+								
 								<div class="col d-flex align-items-center  justify-content-end pt-3">
-									<button type="submit" class="btn btn-success d-flex align-items-center" id="id-consultar">
-										<i class="ri-search-line px-2"></i>
-										Buscar
+									<button type="submit" class="btn btn-success" id="id_registrar">
+										registrar cita
 									</button>
 								</div>
-								</fieldset>
-								<fieldset class="row reset alert alert-primary">
-									<div class="d-flex align-items-center">
-										<span>RESULTADOS DE BUSQUEDA: </span>
-										<span class="px-2" id="total"></span>
-									</div>
-								</fieldset>
+								
 							</form>
-							
-							<div class="mt-5" id="container-result">
-									
-									
-							</div>
-							
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">HORARIOS</h3>
-								</div>
-								<div class="card-body">
-									
-									<table class="table">
-										<thead>
-											<tr>
-												<th class="text-center">ID</th>
-												<th class="text-center">FECHA</th>
-												<th class="text-center">HORA</th>
-												<th class="text-center">ESTADO</th>
-											</tr>
-										</thead>
-										<tbody>
-											
-										</tbody>
-									</table>
-									
-								</div>
-							</div>
 							
 						</div>
 					</div>
@@ -120,119 +98,93 @@
 
 
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/js/global.js}"></script>
-	<script th:src="@{/js/jquery-3.7.1.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
 
 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
-
+		
+		
 	<script type="text/javascript">
-		$("#id-consultar").click(function (e) {
+		$(document).ready(function () {
+			
+			let codicoMedico = 0;
+			
+			$(document).on("change", "#id_especialidad", function () {
+				let cod = $(this).val();
+				$.get("buscar/medico/especialidad/" + cod, function (response) {
+					//limpiar combo
+					$("#id_medico").empty().append("<option selected>[selecccione medico]</option>")
+					//bucle
+					$.each(response, function (index, value) {
+						$("#id_medico").append("<option value='" + value.id + "'>" + value.nombre_medico + ' ' + value.apellidos_medico + "</option>");
+						console.log(response)
+					})
+					//marcar codigo de tipo de medicamento segun el medicamento seleccionado
+					$("#id_medico").val(codicoMedico)
+				})
 
-				e.preventDefault();
-
-				var idMedico = $("#id_medico").val();
-				var idEspecialidad = $("#id_especialidad").val();
-
-				$.ajax({
-					url: "/medijoven/dashboard/consulta-medico",
-					data: {
-						idMedico: idMedico,
-						idEspecialidad: idEspecialidad
-					},
-					success: function (response) {
-
-						$("#container-result").empty(); // Limpiar contenedor de cards
-						$("#total").text(response.length);
-						
-						response.forEach(medico => {
-
-							var card = `
-      							<div class="row g-3">
-            						<div class="col-md-4">
-                						<h5 class="mb-3" id="nombre_medico">${medico.nombre_medico}</h5>
-                						<table>
-	                    					<tbody>
-                        						<tr>
-                            						<td>correo</td>
-                            						<td class="px-2" id="#correo">${medico.correo}</td>
-                        						</tr>
-                        						<tr>
-                            						<td>Telefono</td>
-                            						<td class="px-2" id="#telefono">${medico.telefono}</td>
-                        						</tr>
-                    						</tbody>
-                						</table>
-            						</div>
-            						<div class="col-md-4">
-                					<dl class="row">
-                    					<h5 class="mb-3">Especialidad</h5>
-                    					<dd class="col-sm-5" id="#nombre_especialidad">
-	                        				${medico.especialidad.nombre}
-                    					</dd>
-                					</dl>
-            					</div>
-            					<div class="col d-flex align-items-center  justify-content-end pt-3">
-                					<button type="submit" class="btn btn-primary d-flex align-items-center reservar-cita" data-id-medico="${medico.id}">
-                    					Reservar Cita
-                					</button>
-            					</div>
-            				<hr/>
-        					</div>
-      							
-    						`;
-
-							$("#container-result").append(card);
-
-						});
+			})
+			
+			$('#id_form').bootstrapValidator({
+				fields: {
+					medico: {
+						validators: {
+							notEmpty: {
+								message: 'Campo medico es obligatorio'
+							}
+						}
 					}
-				});
-
+				}
 			});
-			
-			$("#container-result").on("click", ".reservar-cita", function(){
 
-   var idMedico = $(this).data("idMedico");
-   
-   $.get("/medijoven/dashboard/consulta-horario/" + idMedico, function(horarios){
-     
-     $(".table tbody").empty();
-     
-     horarios.forEach(function(horario){
-       var row = 
-       `
-       <tr class="text-center">
-         <td>${horario.id}</td>
-         <td>${horario.fecha}</td>
-         <td>${horario.hora}</td>
-         <td>
-			 <span class="badge rounded-pill bg-success">
-				 ${horario.estado}
-			 </span>
-		 </td>
-		 <td>
-			 <button class="btn btn-eliminar btn-primary fs-7">
-				 reservar
-			</button>
-		 </td>
-       </tr>
-       `;
-       
-       $(".table tbody").append(row);
-       
-     });
-     
-   });
-   
-});
-			
-			
-	</script>
+			$("#id_registrar").click(function () {
+				// Lanza la validación
+				$('#id_form').bootstrapValidator('validate');
 
+				// Pregunta si es válido el formulario (Si no tiene errores)
+				if ($('#id_form').data('bootstrapValidator').isValid()) {
+					$.ajax({
+						type: "POST",
+						url: "/medijoven/dashboard/cita-medica/registrar",
+						data: $('#id_form').serialize(),
+						success: function (data) {
+							// Mostrar mensaje de éxito con SweetAlert2
+							Swal.fire({
+								icon: 'success',
+								title: 'Éxito',
+								text: data.MENSAJE,
+								onClose: function () {
+									$('#id_form').bootstrapValidator('resetForm', true);
+									limpiarFormulario();
+									window.location.href = '/medijoven/dashboard/citas-medicas';
+								}
+							});
+						},
+						error: function (data) {
+							// Mostrar mensaje de error con SweetAlert2
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE,
+							});
+						}
+					});
+				}
+			});
+
+			// Función para limpiar el formulario (reemplaza esto con tu función real)
+			function limpiarFormulario() {
+				$('#id_form').trigger("reset");
+			}
+		});
+		
+	</script>	
+		
+		
 </body>
 
 </html>

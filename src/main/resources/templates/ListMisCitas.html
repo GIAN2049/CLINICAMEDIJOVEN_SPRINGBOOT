@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta carset="UTF-8">
+	<!-- start: datatable -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css}">
+	<!-- finish: datatable -->
+	 <!-- start: Icons -->
+ 	<link th:href="@{https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css}" rel="stylesheet">
+ 	<!-- start: Icons -->
+ 	<!-- start: CSS -->
+
+ 	<link rel="stylesheet" th:href="@{/css/core.css}"/>
+ 	<link rel="stylesheet" th:href="@{/css/theme-default.css}" />
+ 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- end: CSS -->
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div th:insert="~{layout/dashboard::sidebar}"></div>
+	<main class="bg-light">
+		<div class="p-2">
+			<div th:insert="~{layout/dashboard::navbar}"></div>
+			<div class="py-2">
+				<div class="container-fluid">
+					<div class="card mt-3">
+						<div class="card-body">
+							<h5 class="card-title">Citas Medicas</h5>
+							<hr>
+							<table id="id_table" class="table table-hover">
+								<thead>
+									<tr>
+										<th class="text-center">Id</th>
+										<th class="text-center">Paciente</th>
+										<th class="text-center">Medico</th>
+										<th class="text-center">Especialida</th>
+										<th class="text-center">Fecha Cita</th>
+										<th class="text-center">Hora</th>
+										<th class="text-center">Estado</th>
+										<th class="text-center">Acciones</th>
+									</tr>
+								</thead>
+								<tbody class="text-center">
+									<tr th:each="cm: ${miscitas}">
+										<td th:text="${cm.idCitaMedica}"></td>
+										<td th:text="${cm.paciente.nombre_paciente}"></td>
+										<td th:text="${cm.medico.nombre_medico}"></td>
+										<td th:text="${cm.especialidad.nombre}"></td>
+										<td th:text="${cm.fechaCita}"></td>
+										<td th:text="${cm.hora}"></td>
+										<td th:text="${cm.estadoCita}"></td>
+										<td>
+											<button class="btn btn-cancelar btn-danger btn-sm">
+												<div class="d-flex align-items-center gap-2">
+													<i class="ri-close-line"></i>
+													cancelar cita
+												</div>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+
+	<!--Datatables-->
+
+	<script th:src="@{https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js}"></script>
+
+
+	<script th:src="@{//cdn.jsdelivr.net/npm/sweetalert2@10}"></script>
+	<script
+		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js}"></script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#id_table').DataTable({
+			});
+
+			$(document).on("click", ".btn-cancelar", function () {
+				let cod, nombre;
+				cod = $(this).parents("tr").find("td")[0].innerHTML;
+			
+				console.log(cod)
+	
+				if (cod != null) {
+					$.ajax({
+						type: "POST",
+						url: "/medijoven/dashboard/mis-citas/cancelar/" + cod,
+						success: function (data) {
+							Swal.fire({
+								icon: 'success',
+								title: data.MENSAJE,
+								willClose: function () {
+									window.location.reload();
+								}
+							});
+						},
+						error: function (data) {
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.MENSAJE,
+							});
+						}
+					});
+				}
+			});
+
+			
+
+		});
+
+
+	</script>
+
+</body>
+
+</html>
