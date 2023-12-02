@@ -34,15 +34,15 @@ public class Usuario {
     
     
     @OneToOne
-    @JoinColumn(name="id_medico")
+    @JoinColumn(name="id_medico", nullable = true)
     private Medico medico;
     
     @OneToOne
-    @JoinColumn(name="id_farmaceutico")
+    @JoinColumn(name="id_farmaceutico", nullable = true)
     private Farmaceutico farmaceutico;
    
     @ManyToOne
-    @JoinColumn(name = "id_paciente")
+    @JoinColumn(name = "id_paciente", nullable = true)
     private Paciente paciente;
 
 }

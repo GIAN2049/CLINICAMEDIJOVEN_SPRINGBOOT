@@ -44,10 +44,6 @@
 										<td th:text="${bean.username}"></td>
 										<td th:text="${bean.rol.nombre}"></td>
 										<td>
-											<button class="btn btn-editar btn-warning fs-7" data-bs-toggle="modal"
-												data-bs-target="#modalEditar">
-												<i class="ri-edit-box-line"></i>
-											</button>
 											<button class="btn btn-eliminar btn-danger fs-7">
 												<i class="ri-delete-bin-2-fill"></i>
 											</button>
@@ -55,28 +51,6 @@
 									</tr>
 								</tbody>
 							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="modal fade" id="modalEditar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-				aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<form class="row g-3" id="id_form">
-								
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
-							<button type="button" class="btn btn-primary" id="id_guardar">guardar</button>
 						</div>
 					</div>
 				</div>
@@ -128,11 +102,11 @@
 				if (cod != null) {
 					$.ajax({
 						type: "DELETE",
-						url: "/medijoven/dashboard/paciente/eliminar/" + cod, // Corregido para usar una URL absoluta
+						url: "/medijoven/dashboard/usuario/eliminar/" + cod, // Corregido para usar una URL absoluta
 						success: function (data) {
 							swalWithBootstrapButtons.fire({
 								title: 'Are you sure?',
-								text: "Estas seguro de eliminar al doctor " + nombre,
+								text: "Estas seguro de eliminar este usuario " + nombre,
 								icon: 'warning',
 								showCancelButton: true,
 								confirmButtonText: 'Yes, delete it!',
@@ -172,60 +146,7 @@
 				}
 
 			});
-			$(document).on("click", ".btn-editar", function () {
-				//leer la columna codigo de la fila actual segun el boton que se hiso click
-				let id;
-				id = $(this).parents("tr").find("td")[0].innerHTML;
-				//realizar solicitud ajax
-				$.ajax({
-					url: "/medijoven/dashboard/buscar/paciente/" + id,
-					type: "GET",
-					dataType: "json",
-					success: function (response) {
-						$('#id_ID').val(response.id);
-						$('#id_nombre').val(response.nombre_paciente);
-						$('#id_apellido').val(response.apellidos);
-						$('#id_dni').val(response.dni);
-						$('#id_direccion').val(response.direccion);
-						$('#id_telefono').val(response.telefono);
-						$('#id_sexo').val(response.sexo);
-						$('#id_fecNac').val(response.fecha_nacimiento);
-						
-					}
-				})
-
-			})
-
-			$("#id_guardar").click(function () {
-				var id = $('#id_ID').val();
-				if (id != null) {
-					$.ajax({
-						type: "PUT",
-						url: "/medijoven/dashboard/paciente/actualizar/" + id, // Corregido para usar una URL absoluta
-						data: $('#id_form').serialize(),
-						success: function (data) {
-							Swal.fire({
-								icon: 'success',
-								title: 'Éxito',
-								text: data.MENSAJE,
-								onClose: function () {
-									// Recargar la página
-									window.location.reload();
-								}
-							});
-						},
-						error: function (data) {
-							Swal.fire({
-								icon: 'error',
-								title: 'Error',
-								text: data.MENSAJE, // Usar data.MENSAJE para obtener el mensaje de error
-								// No es necesario acceder a xhr.responseText
-							});
-						}
-					});
-				}
-
-			});
+		
 
 			function limpiarFormulario() {
 				$('#id_form').trigger("reset");

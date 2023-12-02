@@ -45,7 +45,7 @@
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">Medico</label>
 										<div class="col-sm-10">
-											<select class="form-select" name="medico" id="medico">
+											<select class="form-select" name="medico" id="medico" disabled>
 												<option value="null">[ SELECCCIONE MEDICO ]</option>
 												<option th:each="bean:${medicos}" 
 														th:value="${bean.id}" 
@@ -58,7 +58,7 @@
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">Farmaceutico</label>
 										<div class="col-sm-10">
-											<select class="form-select" name="farmaceutico" id="farmaceutico">
+											<select class="form-select" name="farmaceutico" id="farmaceutico" disabled>
 												<option value="null">[ SELECCCIONE FARMACEUTICO ]</option>
 												<option th:each="bean:${farmaceuticos}" 
 														th:value="${bean.idFarmeceutico}" 
@@ -67,6 +67,10 @@
 											</select>
 										</div>
 									</div>
+									
+									<button class="btn btn-success" id="id_habilitar" type="button">
+										habilitar campos
+									</button>
 								</fieldset>
 								
 								<fieldset class="p-3 mb-3 reset">
@@ -121,6 +125,13 @@
 
 
 	<script type="text/javascript">
+		
+		$('#id_habilitar').click(function () {
+        // Habilitar los selects 'medico' y 'farmaceutico'
+        	$('#medico, #farmaceutico').prop('disabled', false);
+    	});
+
+		
 		$('#medico').change(function() {
             var farmaceuticoSelect = $('#farmaceutico');
             farmaceuticoSelect.prop('disabled', ($(this).val() !== 'null'));
